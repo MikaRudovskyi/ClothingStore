@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { registerUser, loginUser } from "./LoginModal.api";
+import { useNavigate } from "react-router-dom";
 
 // Анимации
 const fadeIn = keyframes`
@@ -238,6 +239,7 @@ const LoginModal = ({ onClose }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -249,6 +251,7 @@ const LoginModal = ({ onClose }) => {
         console.log("Register:", response);
         alert("Registration successful!");
         onClose();
+        navigate("/account");
       } else {
         // Авторизация
         const credentials = { email, password };
@@ -257,6 +260,7 @@ const LoginModal = ({ onClose }) => {
         console.log("Login:", response);
         alert("Login successful!");
         onClose();
+        navigate("/account");
       }
     } catch (error) {
       console.error(

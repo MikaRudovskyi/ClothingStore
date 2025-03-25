@@ -3,19 +3,20 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
-import ProductDetails from "./components/ProductDetails";
-import Cart from "./components/Cart";
+import ProductDetails from "./components/productComponents/ProductDetails";
+import Cart from "./components/cartComponents/Cart";
 import GlobalStyle from "./styles/GlobalStyles";
 import Footer from "./components/Footer";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import { CartProvider } from "./components/CartContext"; // Импорт CartProvider
+import Account from "./pages/Account";
+import { CartProvider } from "./components/cartComponents/CartContext";
 
 function App() {
   return (
     <CartProvider>
       {" "}
-      {/* Обертываем приложение CartProvider */}
+      {}
       <div>
         <GlobalStyle />
         <Navbar />
@@ -26,6 +27,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
         <Footer />
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import bgImage from "../assets/images/newsletter-bg.png";
+import bgImage from "../../assets/images/banners/newsletter-bg.png";
 
 const NewsletterContainer = styled.div`
   padding: 60px 40px;

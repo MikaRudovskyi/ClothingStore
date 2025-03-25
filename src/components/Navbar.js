@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-import { useCart } from "./CartContext";
-import CartIcon from "../assets/images/cart-icon.png";
-import LoginIcon from "../assets/images/login-icon.png";
-import LoginModal from "./LoginModal";
+import { useCart } from "./cartComponents/CartContext";
+import CartIcon from "../assets/images/icons/cart-icon.png";
+import LoginIcon from "../assets/images/icons/login-icon.png";
+import LoginModal from "./loginComponents/LoginModal";
 
 const fadeIn = keyframes`
   from {

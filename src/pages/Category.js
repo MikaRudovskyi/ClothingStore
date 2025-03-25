@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import products from "../data/products";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/productComponents/ProductCard";
 import styled from "styled-components";
 
 const ProductList = styled.div`

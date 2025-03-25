@@ -1,16 +1,16 @@
 import React, { useRef } from "react";
 import products from "../data/products";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/productComponents/ProductCard";
 import styled from "styled-components";
-import Banner from "../components/Banner";
-import Newsletter from "../components/Newsletter";
-import Testimonials from "../components/Testimonials";
-import ImageSlider from "../components/ImageSlider";
-import banner1 from "../assets/images/banner1.png";
-import banner2 from "../assets/images/banner2.png";
-import banner3 from "../assets/images/banner3.png";
-import aboutUsImage from "../assets/images/about-us.png";
-import Modal from "../components/Modal";
+import Banner from "../components/homeComponents/Banner";
+import Newsletter from "../components/homeComponents/Newsletter";
+import Testimonials from "../components/homeComponents/Testimonials";
+import ImageSlider from "../components/homeComponents/ImageSlider";
+import banner1 from "../assets/images/banners/banner1.png";
+import banner2 from "../assets/images/banners/banner2.png";
+import banner3 from "../assets/images/banners/banner3.png";
+import aboutUsImage from "../assets/images/banners/about-us.png";
+import Modal from "../components/homeComponents/Modal";
 
 const ProductList = styled.div`
   display: flex;
@@ -111,6 +111,12 @@ const Home = () => {
     bestOffersRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  const selectedProductIds = [3, 9, 5, 2, 6, 4];
+
+  const bestOffersProducts = selectedProductIds
+    .map((id) => products.find((product) => product.id === id))
+    .filter((product) => product !== undefined);
+
   return (
     <div>
       <Banner scrollToBestOffers={scrollToBestOffers} />
@@ -119,7 +125,7 @@ const Home = () => {
       <BestOffers ref={bestOffersRef}>
         <h2>Best Offers</h2>
         <ProductList>
-          {products.map((product) => (
+          {bestOffersProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </ProductList>

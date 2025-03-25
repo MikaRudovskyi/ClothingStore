@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import products from "../data/products";
+import products from "../../data/products";
 import styled, { keyframes, css } from "styled-components";
-import { useCart } from "./CartContext";
+import { useCart } from "../cartComponents/CartContext";
 
 const pulseAnimation = keyframes`
   0% {
