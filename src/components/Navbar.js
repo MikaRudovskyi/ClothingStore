@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import { useCart } from "./cartComponents/CartContext";
+import { useAuth } from "../context/AuthContext";
 import CartIcon from "../assets/images/icons/cart-icon.png";
 import LoginIcon from "../assets/images/icons/login-icon.png";
+import LogoNavi from "../assets/images/logo/navi_logo.png";
 import LoginModal from "./loginComponents/LoginModal";
 
 const fadeIn = keyframes`
@@ -32,43 +34,56 @@ const TopBar = styled.div`
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
   .logo {
+    display: flex;
+    align-items: center;
     font-weight: 700;
     font-size: 2.2rem;
     cursor: pointer;
     color: #ffffff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     position: relative;
-    display: inline-block;
     overflow: hidden;
     transition: transform 0.3s ease;
     border-radius: 5px;
-  }
+    text-decoration: none;
 
-  .logo:hover {
-    transform: scale(1.1);
-  }
+    &:hover {
+      transform: scale(1.1);
+    }
 
-  .logo::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      transparent 0%,
-      #ffd700 50%,
-      transparent 100%
-    );
-    transition: left 0.3s ease-in-out;
-  }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        #ffd700 50%,
+        transparent 100%
+      );
+      transition: left 0.3s ease-in-out;
+    }
 
-  .logo:hover::after {
-    left: 100%;
-    transition: left 0.3s ease-in-out;
-    mix-blend-mode: lighten;
+    &:hover::after {
+      left: 100%;
+      transition: left 0.3s ease-in-out;
+      mix-blend-mode: lighten;
+    }
+
+    .logo-image {
+      width: 50px;
+      height: auto;
+      margin-right: 15px;
+    }
   }
 
   .top-bar-right {
@@ -109,6 +124,39 @@ const TopBar = styled.div`
       animation: ${css`
         ${fadeIn} 0.3s ease-in-out
       `};
+    }
+  }
+
+  .user-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-left: 40px;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+
+    &:hover {
+      color: #ffd700;
+      transform: translateY(-3px);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7),
+        0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #ffd700, #f4b400);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
     }
   }
 
@@ -227,6 +275,7 @@ const Dropdown = styled.div`
 const Navbar = () => {
   const { totalItems } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const handleLanguageChange = (newLanguage) => {
     console.log(`Language changed to: ${newLanguage}`);
@@ -243,9 +292,12 @@ const Navbar = () => {
   return (
     <Nav>
       <TopBar>
-        <Link to="/" className="logo">
-          Clothing Store
-        </Link>
+        <div className="logo-container">
+          <Link to="/" className="logo">
+            <img src={LogoNavi} alt="Logo Navi" className="logo-image" />
+            Clothing Store
+          </Link>
+        </div>
         <div className="top-bar-right">
           <Dropdown>
             <button>USD</button>
@@ -302,9 +354,17 @@ const Navbar = () => {
             </Link>
             {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
           </div>
-          <button className="login-button" onClick={openModal}>
-            <img src={LoginIcon} alt="Login" />
-          </button>
+          {user ? (
+            <>
+              <Link to="/account">
+                <span className="user-name">{user.name}</span>
+              </Link>
+            </>
+          ) : (
+            <button className="login-button" onClick={openModal}>
+              <img src={LoginIcon} alt="Login" />
+            </button>
+          )}
         </div>
       </TopBar>
       <BottomBar>

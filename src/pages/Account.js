@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../context/AuthContext";
+import { updateUser } from "../components/loginComponents/LoginModal.api";
 
 const AccountContainer = styled.div`
   max-width: 500px;
@@ -61,35 +63,46 @@ const LogoutButton = styled(Button)`
 
 const Account = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-  });
+  const { user, logout } = useAuth();
+
+  const [updatedUser, setUpdatedUser] = useState(user || {});
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (!storedUser) {
-      navigate("/"); // Если нет пользователя, редирект на главную
+    if (!user) {
+      navigate("/account");
     } else {
-      setUser(storedUser);
+      setUpdatedUser(user);
     }
-  }, [navigate]);
+  }, [user, navigate]);
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = () => {
-    localStorage.setItem("user", JSON.stringify(user));
-    alert("Changes saved!");
+    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     localStorage.removeItem("user");
     navigate("/");
+    window.location.reload();
+  };
+
+  const handleSave = async () => {
+    try {
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      const userToUpdate = {
+        ...updatedUser,
+        userId: currentUser.id, // <- это нужно обязательно передать
+      };
+
+      const response = await updateUser(userToUpdate);
+
+      // Обновляем localStorage именно тем, что вернул сервер (у него точно есть id)
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      alert("Changes saved!");
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
   };
 
   return (
@@ -100,29 +113,30 @@ const Account = () => {
         <input
           type="text"
           name="name"
-          value={user.name}
+          value={updatedUser.name || ""}
           onChange={handleChange}
         />
-
         <label>Email</label>
-        <input type="email" name="email" value={user.email} readOnly />
-
+        <input
+          type="email"
+          name="email"
+          value={updatedUser.email || ""}
+          readOnly
+        />
         <label>Phone Number</label>
         <input
           type="text"
           name="phone"
-          value={user.phone}
+          value={updatedUser.phone || ""}
           onChange={handleChange}
         />
-
         <label>Address</label>
         <input
           type="text"
           name="address"
-          value={user.address}
+          value={updatedUser.address || ""}
           onChange={handleChange}
         />
-
         <Button type="button" onClick={handleSave}>
           Save
         </Button>

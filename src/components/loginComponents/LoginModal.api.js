@@ -17,3 +17,15 @@ export const loginUser = async (credentials) => {
     throw error;
   }
 };
+
+export const updateUser = async (userData) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:5000/api/auth/update",
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

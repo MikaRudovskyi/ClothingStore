@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { registerUser, loginUser } from "./LoginModal.api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 // Анимации
 const fadeIn = keyframes`
@@ -239,25 +240,32 @@ const LoginModal = ({ onClose }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isRegistering) {
-        // Регистрация
         const userData = { name, email, phone, password };
         const response = await registerUser(userData);
-        console.log("Register:", response);
+        login(response.user, response.token);
+        if (rememberMe) {
+          localStorage.setItem("user", JSON.stringify(response.user));
+          localStorage.setItem("token", response.token);
+        }
         alert("Registration successful!");
         onClose();
-        navigate("/account");
+        navigate("/");
       } else {
-        // Авторизация
         const credentials = { email, password };
         const response = await loginUser(credentials);
-        localStorage.setItem("token", response.token);
-        console.log("Login:", response);
+        login(response.user, response.token);
+        if (rememberMe) {
+          localStorage.setItem("user", JSON.stringify(response.user));
+          localStorage.setItem("token", response.token);
+        }
         alert("Login successful!");
         onClose();
         navigate("/account");
@@ -329,7 +337,12 @@ const LoginModal = ({ onClose }) => {
           {!isRegistering && (
             <RememberMe>
               <Switch>
-                <SwitchInput type="checkbox" id="remember" />
+                <SwitchInput
+                  type="checkbox"
+                  id="remember"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
                 <Slider />
               </Switch>
               <SwitchLabel htmlFor="remember">Remember me</SwitchLabel>
@@ -350,9 +363,9 @@ const LoginModal = ({ onClose }) => {
             </>
           ) : (
             <>
-              Don't have an account yet?{" "}
+              Don't have an account?{" "}
               <a href="#" onClick={toggleRegister}>
-                Join
+                Register
               </a>
             </>
           )}
