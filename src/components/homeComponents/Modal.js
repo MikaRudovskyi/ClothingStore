@@ -77,6 +77,30 @@ const ModalContent = styled.div`
       background-color: rgba(255, 215, 0, 0.4);
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 10px;
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    button {
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 const Modal = ({ isOpen, onClose, children }) => {

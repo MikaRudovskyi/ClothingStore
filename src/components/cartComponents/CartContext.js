@@ -7,12 +7,22 @@ export const CartProvider = ({ children }) => {
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
-    // Пересчитываем totalItems при изменении cartItems
+    const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
+    if (savedCartItems) {
+      setCartItems(savedCartItems);
+    }
+  }, []);
+
+  useEffect(() => {
     const newTotal = cartItems.reduce(
       (total, item) => total + item.quantity,
       0
     );
     setTotalItems(newTotal);
+
+    if (cartItems.length > 0) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
   }, [cartItems]);
 
   const addToCart = (product) => {
@@ -31,9 +41,11 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (productId) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
-    );
+    setCartItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== productId);
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
   };
 
   const decreaseQuantity = (productId) => {

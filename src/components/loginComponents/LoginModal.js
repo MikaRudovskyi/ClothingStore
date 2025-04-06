@@ -47,6 +47,11 @@ const ModalContent = styled.div`
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   position: relative;
   animation: ${slideUp} 0.3s ease-out;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 20px;
+  }
 `;
 
 const rotate = keyframes`
@@ -95,6 +100,11 @@ const Title = styled.h2`
   color: #ffc107;
   font-size: 2rem;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
 `;
 
 const Form = styled.form`
@@ -138,6 +148,17 @@ const Form = styled.form`
       background-color: #ffb300;
     }
   }
+
+  @media (max-width: 768px) {
+    button[type="submit"] {
+      font-size: 0.9rem;
+      padding: 12px 20px;
+    }
+
+    input {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 const RememberMe = styled.div`
@@ -148,6 +169,11 @@ const RememberMe = styled.div`
   gap: 10px;
   white-space: nowrap;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
 `;
 
 const Switch = styled.label`
@@ -197,11 +223,26 @@ const Slider = styled.span`
     transition: 0.4s;
     border-radius: 50%;
   }
+
+  @media (max-width: 768px) {
+    width: 38px;
+    height: 18px;
+
+    &:before {
+      height: 14px;
+      width: 14px;
+    }
+  }
 `;
 
 const SwitchLabel = styled.span`
   margin-left: 1px;
   margin-bottom: 7px;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 11px;
+  }
 `;
 
 const ForgotPasswordLink = styled.a`
@@ -215,6 +256,11 @@ const ForgotPasswordLink = styled.a`
   &:hover {
     color: #ffb300;
     text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-bottom: 10px;
   }
 `;
 
@@ -231,6 +277,11 @@ const SignUp = styled.div`
     &:hover {
       color: #ffb300;
     }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-top: 20px;
   }
 `;
 

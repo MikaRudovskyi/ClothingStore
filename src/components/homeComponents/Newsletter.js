@@ -12,7 +12,7 @@ const NewsletterContainer = styled.div`
   margin: 40px auto;
   max-width: 700px;
   color: #fff;
-  font-family: "Roboto", sans-serif; // Замените на свой шрифт
+  font-family: "Roboto", sans-serif;
 
   h2 {
     font-size: 2.5rem;
@@ -31,6 +31,7 @@ const NewsletterContainer = styled.div`
   form {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
 
     input[type="email"] {
       padding: 15px 20px;
@@ -42,6 +43,7 @@ const NewsletterContainer = styled.div`
       width: 100%;
       max-width: 400px;
       transition: box-shadow 0.3s ease;
+      margin-bottom: 15px; /* Добавляем отступ для мобильных устройств */
 
       &:focus {
         outline: none;
@@ -65,6 +67,39 @@ const NewsletterContainer = styled.div`
         transform: translateY(-5px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
       }
+    }
+  }
+
+  /* Мобильная версия */
+  @media (max-width: 768px) {
+    padding: 40px 20px;
+    margin: 20px 10px;
+    max-width: 100%;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    form {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="email"] {
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+
+    button {
+      max-width: 100%;
+      padding: 12px 30px;
     }
   }
 `;

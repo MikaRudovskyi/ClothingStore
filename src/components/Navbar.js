@@ -19,6 +19,66 @@ const fadeIn = keyframes`
   }
 `;
 
+const Dropdown = styled.div`
+  position: relative;
+  display: inline-block;
+  margin-left: 30px;
+
+  button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1.1rem;
+
+    &:hover {
+      background-color: #555;
+      transform: translateY(-3px);
+    }
+  }
+
+  ul {
+    display: none;
+    position: absolute;
+    background-color: #1e1e1e;
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    border-radius: 5px;
+
+    li {
+      button {
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #333;
+          color: #ffd700;
+        }
+      }
+    }
+  }
+
+  &:hover ul {
+    display: block;
+  }
+`;
+
 const Nav = styled.nav`
   display: flex;
   flex-direction: column;
@@ -176,6 +236,75 @@ const TopBar = styled.div`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 10px 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    .logo {
+      font-size: 1.6rem;
+
+      .logo-image {
+        width: 35px;
+        margin-right: 10px;
+      }
+
+      .logo-text {
+        display: none;
+      }
+    }
+
+    .top-bar-right {
+      margin-top: 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      .cart-link {
+        margin-left: 15px;
+      }
+
+      .login-button {
+        margin-left: 15px;
+      }
+
+      .user-name {
+        font-size: 1rem;
+        margin-left: 15px;
+      }
+
+      ${Dropdown} {
+        margin-left: 15px;
+
+        button {
+          font-size: 0.95rem;
+          padding: 8px 12px;
+        }
+
+        ul {
+          min-width: 120px;
+
+          li button {
+            font-size: 0.9rem;
+            padding: 8px 15px;
+          }
+        }
+      }
+    }
+
+    body {
+      padding-top: 60px;
+    }
+  }
 `;
 
 const BottomBar = styled.div`
@@ -191,6 +320,7 @@ const BottomBar = styled.div`
     margin: 0;
     padding: 0;
     align-items: center;
+    flex-wrap: wrap;
 
     li {
       margin-left: 30px;
@@ -210,72 +340,31 @@ const BottomBar = styled.div`
       }
     }
   }
-`;
 
-const Dropdown = styled.div`
-  position: relative;
-  display: inline-block;
-  margin-left: 30px;
+  @media (max-width: 768px) {
+    ul {
+      flex-direction: column;
+      width: 100%;
 
-  button {
-    background: none;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 12px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-size: 1.1rem;
+      li {
+        margin: 10px 0;
 
-    &:hover {
-      background-color: #555;
-      transform: translateY(-3px);
-    }
-  }
-
-  ul {
-    display: none;
-    position: absolute;
-    background-color: #1e1e1e;
-    min-width: 150px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    list-style: none;
-    padding: 5px 0;
-    margin: 0;
-    border-radius: 5px;
-
-    li {
-      button {
-        width: 100%;
-        text-align: left;
-        background: transparent;
-        border: none;
-        color: #ffffff;
-        padding: 10px 20px;
-        text-decoration: none;
-        display: block;
-        transition: background-color 0.3s ease;
-        font-size: 1rem;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #333;
-          color: #ffd700;
+        a {
+          font-size: 1rem;
+          width: 100%;
+          display: block;
+          text-align: center;
         }
       }
     }
-  }
-
-  &:hover ul {
-    display: block;
+    margin-top: 60px;
   }
 `;
 
 const Navbar = () => {
   const { totalItems } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   const handleLanguageChange = (newLanguage) => {
     console.log(`Language changed to: ${newLanguage}`);
@@ -295,7 +384,7 @@ const Navbar = () => {
         <div className="logo-container">
           <Link to="/" className="logo">
             <img src={LogoNavi} alt="Logo Navi" className="logo-image" />
-            Clothing Store
+            <span className="logo-text">Clothing Store</span>
           </Link>
         </div>
         <div className="top-bar-right">

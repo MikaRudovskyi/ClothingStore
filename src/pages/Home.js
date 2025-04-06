@@ -92,9 +92,27 @@ const AboutUsContainer = styled.div`
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 20px;
 
     &:hover {
       background-color: #ffecb3;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-content {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .about-text,
+    .about-image {
+      width: 100%;
+    }
+
+    .cta-button {
+      font-size: 1rem;
+      padding: 12px 25px;
     }
   }
 `;
