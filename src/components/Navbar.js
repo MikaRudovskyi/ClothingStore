@@ -7,6 +7,7 @@ import CartIcon from "../assets/images/icons/cart-icon.png";
 import LoginIcon from "../assets/images/icons/login-icon.png";
 import LogoNavi from "../assets/images/logo/navi_logo.png";
 import LoginModal from "./loginComponents/LoginModal";
+import { useCurrency } from "../components/CurrencyContext";
 
 const fadeIn = keyframes`
   from {
@@ -324,6 +325,7 @@ const BottomBar = styled.div`
 
     li {
       margin-left: 30px;
+      position: relative;
 
       a {
         color: #ffffff;
@@ -361,13 +363,98 @@ const BottomBar = styled.div`
   }
 `;
 
+const CategoryDropdown = styled.li`
+  position: relative;
+
+  > a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: inline-block;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #555;
+      transform: translateY(-3px);
+    }
+  }
+
+  ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1e1e1e;
+    border-radius: 0 0 8px 8px;
+    min-width: 180px;
+    padding: 10px 8px;
+    margin: 0;
+    z-index: 1000;
+    list-style: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    animation: ${fadeIn} 0.3s ease-in-out;
+
+    li {
+      a {
+        display: block;
+        padding: 10px 20px;
+        color: #ffffff;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #333;
+          color: #ffd700;
+          padding-left: 25px;
+        }
+      }
+    }
+  }
+
+  &:hover > ul {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    position: static;
+
+    > a {
+      padding: 10px 15px;
+      font-size: 1rem;
+    }
+
+    ul {
+      position: static;
+      box-shadow: none;
+      background-color: #2a2a2a;
+      border-radius: 5px;
+      margin-top: 5px;
+
+      li a {
+        padding: 8px 15px;
+        font-size: 0.95rem;
+      }
+    }
+  }
+`;
+
 const Navbar = () => {
   const { totalItems } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
 
+  const { language, setLanguage, currency, setCurrency } = useCurrency();
+
   const handleLanguageChange = (newLanguage) => {
-    console.log(`Language changed to: ${newLanguage}`);
+    setLanguage(newLanguage);
+  };
+
+  const handleCurrencyChange = (newCurrency) => {
+    setCurrency(newCurrency);
   };
 
   const openModal = () => {
@@ -389,49 +476,49 @@ const Navbar = () => {
         </div>
         <div className="top-bar-right">
           <Dropdown>
-            <button>USD</button>
+            <button>{currency}</button>
             <ul>
               <li>
-                <button>USD</button>
+                <button onClick={() => handleCurrencyChange("USD")}>USD</button>
               </li>
               <li>
-                <button>EUR</button>
+                <button onClick={() => handleCurrencyChange("EUR")}>EUR</button>
               </li>
               <li>
-                <button>UAH</button>
+                <button onClick={() => handleCurrencyChange("UAH")}>UAH</button>
               </li>
             </ul>
           </Dropdown>
           <Dropdown>
-            <button>English</button>
+            <button>{language}</button>
             <ul>
               <li>
-                <button onClick={() => handleLanguageChange("en")}>
+                <button onClick={() => handleLanguageChange("English")}>
                   English
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLanguageChange("uk")}>
+                <button onClick={() => handleLanguageChange("Ukrainian")}>
                   Ukrainian
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLanguageChange("tr")}>
+                <button onClick={() => handleLanguageChange("Turkish")}>
                   Turkish
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLanguageChange("de")}>
+                <button onClick={() => handleLanguageChange("German")}>
                   German
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLanguageChange("pt")}>
+                <button onClick={() => handleLanguageChange("Portuguese")}>
                   Portuguese
                 </button>
               </li>
               <li>
-                <button onClick={() => handleLanguageChange("es")}>
+                <button onClick={() => handleLanguageChange("Spanish")}>
                   Spanish
                 </button>
               </li>
@@ -459,22 +546,67 @@ const Navbar = () => {
       <BottomBar>
         <ul>
           <li>
-            <Link to="/category/Sleeves">Sleeves</Link>
+            <CategoryDropdown>
+              <Link to="/category/PRO-KIT">PRO KIT</Link>
+              <ul>
+                <li>
+                  <Link to="/category/Jersey">Jersey</Link>
+                </li>
+                <li>
+                  <Link to="/category/Sleeves">Sleeves</Link>
+                </li>
+              </ul>
+            </CategoryDropdown>
           </li>
           <li>
-            <Link to="/category/T-shirts">T-shirts</Link>
+            <CategoryDropdown>
+              <Link to="/category/APPAREL">APPAREL</Link>
+              <ul>
+                <li>
+                  <Link to="/category/T-shirts">T-shirts</Link>
+                </li>
+                <li>
+                  <Link to="/category/Hoodies">Hoodies</Link>
+                </li>
+                <li>
+                  <Link to="/category/Jackets">Jackets</Link>
+                </li>
+                <li>
+                  <Link to="/category/Pants">Pants</Link>
+                </li>
+                <li>
+                  <Link to="/category/Shorts">Shorts</Link>
+                </li>
+              </ul>
+            </CategoryDropdown>
           </li>
           <li>
-            <Link to="/category/Pants">Pants</Link>
+            <CategoryDropdown>
+              <Link to="/category/ACCESSORIES">ACCESSORIES</Link>
+              <ul>
+                <li>
+                  <Link to="/category/Flag">Flag</Link>
+                </li>
+                <li>
+                  <Link to="/category/Scarf">Scarf</Link>
+                </li>
+                <li>
+                  <Link to="/category/Backpack">Backpack</Link>
+                </li>
+                <li>
+                  <Link to="/category/Suitcase">Suitcase</Link>
+                </li>
+              </ul>
+            </CategoryDropdown>
           </li>
           <li>
-            <Link to="/category/Hoodies">Hoodies</Link>
+            <Link to="/category/OUTLET">OUTLET</Link>
           </li>
           <li>
-            <Link to="/category/Jackets">Jackets</Link>
+            <Link to="/delivery">DELIVERY</Link>
           </li>
           <li>
-            <Link to="/category/Shorts">Shorts</Link>
+            <Link to="/contact">CONTACT</Link>
           </li>
         </ul>
       </BottomBar>

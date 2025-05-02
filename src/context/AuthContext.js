@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    // Попытаться загрузить данные из localStorage при монтировании компонента
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
 
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     setToken(authToken);
 
-    // Сохраняем данные в localStorage
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", authToken);
   };
@@ -29,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setToken(null);
-    // Удаляем данные из localStorage
+
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };

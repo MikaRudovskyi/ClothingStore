@@ -12,24 +12,27 @@ import Terms from "./pages/Terms";
 import Account from "./pages/Account";
 import { CartProvider } from "./components/cartComponents/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { CurrencyProvider } from "./components/CurrencyContext";
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <div>
-          <GlobalStyle />
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/category/:category" element={<Category />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/account" element={<Account />} />
-          </Routes>
-        </div>
+        <CurrencyProvider>
+          <div>
+            <GlobalStyle />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/category/:category" element={<Category />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/account" element={<Account />} />
+            </Routes>
+          </div>
+        </CurrencyProvider>
       </CartProvider>
       <Footer />
     </AuthProvider>

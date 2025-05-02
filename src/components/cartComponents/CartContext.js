@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 const CartContext = createContext();
 
@@ -27,10 +27,12 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const existingItem = prevItems.find(
+        (item) => item.id === product.id && item.size === product.size
+      );
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id
+          item.id === product.id && item.size === product.size
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -40,28 +42,32 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId, size) => {
     setCartItems((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== productId);
+      const updatedItems = prevItems.filter(
+        (item) => item.id !== productId || item.size !== size
+      );
       localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       return updatedItems;
     });
   };
 
-  const decreaseQuantity = (productId) => {
+  const decreaseQuantity = (productId, size) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId && item.quantity > 1
+        item.id === productId && item.size === size && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
     );
   };
 
-  const increaseQuantity = (productId) => {
+  const increaseQuantity = (productId, size) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === productId && item.size === size
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       )
     );
   };

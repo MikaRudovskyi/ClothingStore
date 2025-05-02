@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useCart } from "./CartContext";
+import { useCurrency } from "../CurrencyContext";
 
 const CartStyled = styled.div`
   padding: 20px;
@@ -89,6 +90,7 @@ const CartStyled = styled.div`
 const Cart = () => {
   const { cartItems, removeFromCart, decreaseQuantity, increaseQuantity } =
     useCart();
+  const { currency, currencyRates, currencySymbols } = useCurrency();
 
   const calculateTotal = () => {
     return cartItems.reduce(
@@ -96,6 +98,24 @@ const Cart = () => {
       0
     );
   };
+
+  const totalInSelectedCurrency = calculateTotal() * currencyRates[currency];
+
+  const symbol = currencySymbols[currency];
+
+  const formatCurrency = (value) => {
+    return value
+      .toLocaleString("uk-UA", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+      .replace(",", ".");
+  };
+
+  const formattedTotal =
+    currency === "UAH"
+      ? formatCurrency(totalInSelectedCurrency)
+      : Math.floor(totalInSelectedCurrency);
 
   return (
     <CartStyled>
@@ -106,23 +126,46 @@ const Cart = () => {
         <>
           <ul>
             {cartItems.map((item) => (
-              <li key={item.id}>
-                <img src={item.image} alt={item.name} />{" "}
+              <li key={`${item.id}-${item.size}`}>
+                <img
+                  src={
+                    item.images && item.images.length > 0
+                      ? item.images[0]
+                      : "path/to/default-image.png"
+                  }
+                  alt={item.name}
+                />
                 <span>
-                  {item.name} - ${item.price} x {item.quantity} = $
-                  {item.price * item.quantity}
+                  {item.name} - {symbol}{" "}
+                  {currency === "UAH"
+                    ? formatCurrency(item.price * currencyRates[currency])
+                    : Math.floor(item.price * currencyRates[currency])}{" "}
+                  x {item.quantity} ({item.size}) = {symbol}{" "}
+                  {currency === "UAH"
+                    ? formatCurrency(
+                        item.price * item.quantity * currencyRates[currency]
+                      )
+                    : Math.floor(
+                        item.price * item.quantity * currencyRates[currency]
+                      )}
                 </span>
                 <div>
-                  <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                  <button onClick={() => increaseQuantity(item.id)}>+</button>
-                  <button onClick={() => removeFromCart(item.id)}>
+                  <button onClick={() => decreaseQuantity(item.id, item.size)}>
+                    -
+                  </button>
+                  <button onClick={() => increaseQuantity(item.id, item.size)}>
+                    +
+                  </button>
+                  <button onClick={() => removeFromCart(item.id, item.size)}>
                     Remove
                   </button>
                 </div>
               </li>
             ))}
           </ul>
-          <p>Total: ${calculateTotal()}</p>
+          <p>
+            Total: {symbol} {formattedTotal}
+          </p>
         </>
       )}
     </CartStyled>

@@ -21,7 +21,7 @@ const PageTitle = styled.h2`
 const Category = () => {
   const { category } = useParams();
   const filteredProducts = products.filter(
-    (product) => product.category === category
+    (product) => product.categories && product.categories.includes(category)
   );
 
   return (
