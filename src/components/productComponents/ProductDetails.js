@@ -4,6 +4,8 @@ import products from "../../data/products";
 import styled, { keyframes, css } from "styled-components";
 import { useCart } from "../cartComponents/CartContext";
 import { useCurrency } from "../CurrencyContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const pulseAnimation = keyframes`
   0% { transform: scale(1); }
@@ -80,11 +82,6 @@ const InfoWrapper = styled.div`
     font-size: 1.1rem;
     line-height: 1.6;
   }
-
-  .message {
-    color: green;
-    font-weight: bold;
-  }
 `;
 
 const Button = styled.button`
@@ -143,9 +140,8 @@ const ProductDetails = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === parseInt(id));
   const { addToCart } = useCart();
-  const [addedToCart, setAddedToCart] = useState(false);
   const [animateButton, setAnimateButton] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || ""); // Установим начальный размер из массива
+  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || "");
   const [selectedImage, setSelectedImage] = useState(
     product?.images?.[0] || ""
   );
@@ -159,10 +155,14 @@ const ProductDetails = () => {
       return;
     }
     addToCart({ ...product, size: selectedSize });
-    setAddedToCart(true);
     setAnimateButton(true);
+
+    toast.success("Product added to cart!", {
+      position: "bottom-right",
+      theme: "dark",
+    });
+
     setTimeout(() => {
-      setAddedToCart(false);
       setAnimateButton(false);
     }, 1000);
   };
@@ -245,10 +245,11 @@ const ProductDetails = () => {
         </p>
 
         <Button onClick={handleAddToCart} animate={animateButton}>
-          {addedToCart ? "Added to Cart" : "Add to Cart"}
+          {animateButton ? "Adding..." : "Add to Cart"}
         </Button>
-        {addedToCart && <p className="message">Product added to cart!</p>}
       </InfoWrapper>
+
+      <ToastContainer />
     </Container>
   );
 };

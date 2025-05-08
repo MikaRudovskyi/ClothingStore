@@ -3,8 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { registerUser, loginUser } from "./LoginModal.api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
-// Анимации
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -125,11 +125,16 @@ const Form = styled.form`
     font-size: 1rem;
     background-color: #333;
     color: #eee;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 
     &:focus {
       outline: none;
       border-color: #ffc107;
+      transform: scale(1.02);
+    }
+
+    &::placeholder {
+      color: #bbb;
     }
   }
 
@@ -142,10 +147,15 @@ const Form = styled.form`
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 
     &:hover {
       background-color: #ffb300;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.98);
     }
   }
 
@@ -306,7 +316,7 @@ const LoginModal = ({ onClose }) => {
           localStorage.setItem("user", JSON.stringify(response.user));
           localStorage.setItem("token", response.token);
         }
-        alert("Registration successful!");
+        toast.success("Registration successful!");
         onClose();
         navigate("/");
       } else {
@@ -317,7 +327,7 @@ const LoginModal = ({ onClose }) => {
           localStorage.setItem("user", JSON.stringify(response.user));
           localStorage.setItem("token", response.token);
         }
-        alert("Login successful!");
+        toast.success("Login successful!");
         onClose();
         navigate("/account");
       }
@@ -326,11 +336,7 @@ const LoginModal = ({ onClose }) => {
         "Error:",
         error.response ? error.response.data : error.message
       );
-      alert(
-        error.response
-          ? JSON.stringify(error.response.data, null, 2)
-          : "An error occurred."
-      );
+      toast.error("An error occurred.");
     }
   };
 
@@ -363,7 +369,7 @@ const LoginModal = ({ onClose }) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
-                placeholder="Enter phone "
+                placeholder="Enter phone"
               />
             </>
           )}

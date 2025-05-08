@@ -88,15 +88,25 @@ const Account = () => {
 
   const handleSave = async () => {
     try {
-      const currentUser = JSON.parse(localStorage.getItem("user"));
+      let currentUser = null;
+      try {
+        currentUser = JSON.parse(localStorage.getItem("user"));
+      } catch (e) {
+        alert("User data corrupted in localStorage.");
+        return;
+      }
+      if (!currentUser?.id) {
+        alert("User ID missing.");
+        return;
+      }
+
       const userToUpdate = {
         ...updatedUser,
-        userId: currentUser.id, // <- это нужно обязательно передать
+        userId: currentUser.id,
       };
 
       const response = await updateUser(userToUpdate);
 
-      // Обновляем localStorage именно тем, что вернул сервер (у него точно есть id)
       localStorage.setItem("user", JSON.stringify(response.user));
 
       alert("Changes saved!");

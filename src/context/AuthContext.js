@@ -10,9 +10,13 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
 
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
+    if (storedToken && storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+      } catch (e) {
+        console.error("Invalid user JSON in localStorage:", e);
+      }
     }
   }, []);
 

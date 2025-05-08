@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import bgImage from "../../assets/images/banners/newsletter-bg.png";
+import emailjs from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NewsletterContainer = styled.div`
   padding: 60px 40px;
@@ -43,7 +46,7 @@ const NewsletterContainer = styled.div`
       width: 100%;
       max-width: 400px;
       transition: box-shadow 0.3s ease;
-      margin-bottom: 15px; /* Добавляем отступ для мобильных устройств */
+      margin-bottom: 15px;
 
       &:focus {
         outline: none;
@@ -70,7 +73,6 @@ const NewsletterContainer = styled.div`
     }
   }
 
-  /* Мобильная версия */
   @media (max-width: 768px) {
     padding: 40px 20px;
     margin: 20px 10px;
@@ -107,26 +109,52 @@ const NewsletterContainer = styled.div`
 const Newsletter = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Вы подписались на рассылку с email: ${email}`);
-    setEmail("");
+
+    try {
+      const result = await emailjs.send(
+        "service_nzi1h5l",
+        "template_cssy30s",
+        {
+          user_email: email,
+        },
+        "5o8HIhpD-d843oCQ7"
+      );
+
+      console.log("SUCCESS!", result.text);
+      toast.success("Subscription successfully completed!", {
+        position: "bottom-right",
+        theme: "dark",
+      });
+      setEmail("");
+    } catch (error) {
+      console.error("FAILED...", error);
+      toast.error("An error occurred. Please try again later.", {
+        position: "bottom-right",
+        theme: "dark",
+      });
+    }
   };
 
   return (
-    <NewsletterContainer>
-      <h2>Subscribe to the newsletter</h2>
-      <p>Receive notifications about new arrivals and discounts.</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Введите ваш email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit">Subscribe</button>
-      </form>
-    </NewsletterContainer>
+    <>
+      <NewsletterContainer>
+        <h2>Subscribe to the newsletter</h2>
+        <p>Receive notifications about new arrivals and discounts.</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button type="submit">Subscribe</button>
+        </form>
+      </NewsletterContainer>
+      <ToastContainer />
+    </>
   );
 };
 

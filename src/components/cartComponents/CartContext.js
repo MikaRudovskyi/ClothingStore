@@ -7,9 +7,14 @@ export const CartProvider = ({ children }) => {
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
-    const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
-    if (savedCartItems) {
-      setCartItems(savedCartItems);
+    const savedCartItemsRaw = localStorage.getItem("cartItems");
+    if (savedCartItemsRaw) {
+      try {
+        const savedCartItems = JSON.parse(savedCartItemsRaw);
+        setCartItems(savedCartItems);
+      } catch (e) {
+        console.error("Invalid JSON in cartItems:", e);
+      }
     }
   }, []);
 

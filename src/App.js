@@ -13,6 +13,8 @@ import Account from "./pages/Account";
 import { CartProvider } from "./components/cartComponents/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CurrencyProvider } from "./components/CurrencyContext";
+import Delivery from "./pages/Delivery";
+import Contacts from "./pages/Contacts";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/delivery" element={<Delivery />} />
+              <Route path="/contact" element={<Contacts />} />
             </Routes>
           </div>
         </CurrencyProvider>

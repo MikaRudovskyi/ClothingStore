@@ -129,7 +129,6 @@ const Home = () => {
     bestOffersRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  // const selectedProductIds = [3, 9, 5, 2, 6, 4];
   const selectedProductIds = [3, 9, 5, 2, 6, 4];
 
   const bestOffersProducts = selectedProductIds
