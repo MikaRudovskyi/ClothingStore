@@ -4,12 +4,18 @@ import { useCart } from "./CartContext";
 import { useCurrency } from "../CurrencyContext";
 
 const CartStyled = styled.div`
-  padding: 20px;
+  padding: 30px;
+  background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+  color: #e0e0e0;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
 
   h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    margin-bottom: 25px;
     text-align: center;
+    color: #ffe100;
+    text-shadow: 0 0 10px #ffe10090;
   }
 
   ul {
@@ -18,19 +24,30 @@ const CartStyled = styled.div`
   }
 
   li {
-    border-bottom: 1px solid #eee;
-    padding: 10px 0;
+    background: #121212;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 
   img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    margin-right: 15px;
+    margin-right: 20px;
+    border-radius: 10px;
+    border: 2px solid #ffe10050;
   }
 
   span {
@@ -38,6 +55,7 @@ const CartStyled = styled.div`
     display: block;
     margin-bottom: 5px;
     flex-grow: 1;
+    color: #cfcfcf;
   }
 
   div {
@@ -49,18 +67,27 @@ const CartStyled = styled.div`
   button {
     padding: 8px 15px;
     font-size: 1rem;
-    background-color: rgb(255, 215, 0);
+    background: linear-gradient(145deg, #ffd700, #ffb800);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: #fff;
+      background: linear-gradient(145deg, #fff700, #ffe100);
+      box-shadow: 0 0 12px #ffe100aa;
+    }
+
+    &:active {
+      transform: scale(0.97);
     }
 
     &:focus {
       outline: none;
+      box-shadow: 0 0 0 2px #ffe10080;
     }
 
     @media (max-width: 768px) {
@@ -70,19 +97,27 @@ const CartStyled = styled.div`
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    color: #fff700;
+    text-shadow: 0 0 8px #ffe100;
   }
 
   @media (max-width: 768px) {
-    padding: 10px;
+    padding: 15px;
+
     h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
       font-size: 1.2rem;
     }
-    p {
-      font-size: 1rem;
+
+    span {
+      font-size: 0.95rem;
     }
   }
 `;

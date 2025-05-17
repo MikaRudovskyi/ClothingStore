@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import products from "../../data/products";
 import styled, { keyframes, css } from "styled-components";
@@ -18,6 +18,16 @@ const fadeInUp = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const slideIn = keyframes`
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -34,15 +44,155 @@ const ImageWrapper = styled.div`
 
 const MainImage = styled.img`
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), 0 0 10px rgba(255, 215, 0, 0.2);
   animation: ${fadeInUp} 0.5s ease;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+      45deg,
+      #0e0e0e,
+      #0e0e0e 10px,
+      #1a1a1a 10px,
+      #1a1a1a 20px
+    ),
+    radial-gradient(circle at center, #000 60%, #111 100%);
+  background-blend-mode: overlay;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  animation: ${fadeIn} 0.3s ease;
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  padding: 0 30px;
+  box-sizing: border-box;
+  animation: ${slideIn} 0.4s ease;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+`;
+
+const ModalImage = styled.img`
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.3);
+  transition: transform 0.4s ease-in-out;
+  object-fit: contain;
+
+  @media (max-width: 768px) {
+    border-radius: 10px;
+  }
+`;
+
+const NavButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.7rem;
+  background: linear-gradient(145deg, #111, #222);
+  color: #ffd700;
+  border: 2px solid #ffd700;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #ffd700aa;
+
+  &:hover {
+    background: #ffd700;
+    color: #000;
+    box-shadow: 0 0 20px #ffd700, 0 0 10px #fff;
+    transform: scale(1.1) translateY(-50%);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+const PrevButton = styled(NavButton)`
+  left: 50px;
+
+  @media (max-width: 768px) {
+    left: 20px;
+  }
+`;
+
+const NextButton = styled(NavButton)`
+  right: 50px;
+
+  @media (max-width: 768px) {
+    right: 20px;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  background: rgba(255, 215, 0, 0.15);
+  border: none;
+  font-size: 1.8rem;
+  color: #ffd700;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3),
+    inset 0 0 5px rgba(255, 215, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 215, 0, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    top: 15px;
+    right: 25px;
+    font-size: 1.6rem;
+  }
 `;
 
 const ThumbnailGallery = styled.div`
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 25px;
   flex-wrap: wrap;
 `;
 
@@ -139,6 +289,7 @@ const SizeButton = styled.button`
 const ProductDetails = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === parseInt(id));
+  const [isZoomed, setIsZoomed] = useState(false);
   const { addToCart } = useCart();
   const [animateButton, setAnimateButton] = useState(false);
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || "");
@@ -146,15 +297,34 @@ const ProductDetails = () => {
     product?.images?.[0] || ""
   );
   const { currency, currencyRates, currencySymbols } = useCurrency();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isModalOpen) return;
+
+      if (e.key === "Escape") {
+        closeModal();
+      } else if (e.key === "ArrowRight") {
+        handleNextImage(e);
+      } else if (e.key === "ArrowLeft") {
+        handlePrevImage(e);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen, selectedImage]);
 
   if (!product) return <div>Product Not Found</div>;
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
+    if (product.sizes?.length > 0 && !selectedSize) {
       alert("Please select a size");
       return;
     }
-    addToCart({ ...product, size: selectedSize });
+
+    addToCart({ ...product, size: selectedSize || null });
     setAnimateButton(true);
 
     toast.success("Product added to cart!", {
@@ -167,6 +337,29 @@ const ProductDetails = () => {
     }, 1000);
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleNextImage = (e) => {
+    e.stopPropagation();
+    const currentIndex = product.images.indexOf(selectedImage);
+    const nextIndex = (currentIndex + 1) % product.images.length;
+    setSelectedImage(product.images[nextIndex]);
+  };
+
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    const currentIndex = product.images.indexOf(selectedImage);
+    const prevIndex =
+      (currentIndex - 1 + product.images.length) % product.images.length;
+    setSelectedImage(product.images[prevIndex]);
+  };
+
   const availableSizes = product.sizes || [];
   const convertedPrice = product.price * currencyRates[currency];
   const symbol = currencySymbols[currency];
@@ -175,8 +368,33 @@ const ProductDetails = () => {
 
   return (
     <Container>
+      {isModalOpen && (
+        <ModalOverlay
+          onClick={() => {
+            setIsZoomed(false);
+            closeModal();
+          }}
+        >
+          <ModalContent>
+            <CloseButton onClick={closeModal}>×</CloseButton>
+            <PrevButton onClick={handlePrevImage}>&larr;</PrevButton>
+            <ModalImage
+              src={selectedImage}
+              alt="Enlarged"
+              isZoomed={isZoomed}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsZoomed(!isZoomed);
+              }}
+            />
+            <NextButton onClick={handleNextImage}>&rarr;</NextButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+
       <ImageWrapper>
-        <MainImage src={selectedImage} alt={product.name} />
+        <MainImage src={selectedImage} alt={product.name} onClick={openModal} />
+
         {product.images && product.images.length > 1 && (
           <ThumbnailGallery>
             {product.images.map((img, index) => (
