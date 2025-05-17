@@ -1,8 +1,8 @@
-import axios from "axios";
+import API from "./api";
 
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post("/api/auth/register", userData);
+    const response = await API.post("/auth/register", userData);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post("/api/auth/login", credentials);
+    const response = await API.post("/auth/login", credentials);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,10 +20,7 @@ export const loginUser = async (credentials) => {
 
 export const updateUser = async (userData) => {
   try {
-    const response = await axios.put(
-      "http://localhost:5000/api/auth/update",
-      userData
-    );
+    const response = await API.put("/auth/update", userData);
     return response.data;
   } catch (error) {
     throw error;

@@ -1,13 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-import { useCart } from "./cartComponents/CartContext";
-import { useAuth } from "../context/AuthContext";
-import CartIcon from "../assets/images/icons/cart-icon.png";
-import LoginIcon from "../assets/images/icons/login-icon.png";
-import LogoNavi from "../assets/images/logo/navi_logo.png";
-import LoginModal from "./loginComponents/LoginModal";
-import { useCurrency } from "../components/CurrencyContext";
 
 const fadeIn = keyframes`
   from {
@@ -20,7 +11,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const Dropdown = styled.div`
+export const Dropdown = styled.div`
   position: relative;
   display: inline-block;
   margin-left: 30px;
@@ -78,16 +69,72 @@ const Dropdown = styled.div`
   &:hover ul {
     display: block;
   }
+
+  &.mobile-dropdown {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 15px;
+
+    button {
+      font-size: 0.95rem;
+      padding: 8px 12px;
+    }
+
+    ul {
+      min-width: 120px;
+
+      li button {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+      }
+    }
+
+    &.mobile-dropdown {
+      display: inline-block;
+      margin-left: 0;
+      width: 100%;
+
+      button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px 20px;
+        margin-bottom: 5px;
+      }
+
+      ul {
+        position: static;
+        display: none;
+        background-color: transparent;
+        box-shadow: none;
+        min-width: auto;
+        padding: 0;
+        margin-top: 0;
+        border-radius: 0;
+
+        li button {
+          text-align: center;
+          padding: 8px 15px;
+        }
+      }
+    }
+
+    &.desktop-dropdown {
+      display: none;
+    }
+  }
 `;
 
-const Nav = styled.nav`
+export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   width: 100%;
   font-family: "Montserrat", sans-serif;
 `;
 
-const TopBar = styled.div`
+export const TopBar = styled.div`
   background-color: #1e1e1e;
   padding: 20px 30px;
   display: flex;
@@ -238,10 +285,26 @@ const TopBar = styled.div`
     }
   }
 
+  .mobile-menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 10px;
+    z-index: 1001;
+    order: 3;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 10px 15px;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
     position: fixed;
@@ -268,37 +331,46 @@ const TopBar = styled.div`
     .top-bar-right {
       margin-top: 0;
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      align-items: center;
 
       .cart-link {
+        display: block;
         margin-left: 15px;
+        order: 1;
       }
 
+      .user-name,
       .login-button {
+        display: block;
         margin-left: 15px;
-      }
-
-      .user-name {
-        font-size: 1rem;
-        margin-left: 15px;
+        order: 2;
       }
 
       ${Dropdown} {
+      }
+
+      ${Dropdown}.mobile-dropdown ul {
+        display: block;
+        position: static;
+        background-color: #1e1e1e;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1002;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      ${Dropdown}.mobile-dropdown ul li button {
+        width: 100%;
+        text-align: left;
+      }
+
+      .mobile-menu-button {
+        display: block;
         margin-left: 15px;
-
-        button {
-          font-size: 0.95rem;
-          padding: 8px 12px;
-        }
-
-        ul {
-          min-width: 120px;
-
-          li button {
-            font-size: 0.9rem;
-            padding: 8px 15px;
-          }
-        }
       }
     }
 
@@ -308,12 +380,13 @@ const TopBar = styled.div`
   }
 `;
 
-const BottomBar = styled.div`
-  background-color: #333;
-  padding: 15px 30px;
+export const BottomBar = styled.div`
+  background: linear-gradient(145deg, #0d0d0d, #1c1c1c);
+  padding: 20px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-top: 1px solid #222;
 
   ul {
     display: flex;
@@ -321,49 +394,77 @@ const BottomBar = styled.div`
     margin: 0;
     padding: 0;
     align-items: center;
+    gap: 25px;
     flex-wrap: wrap;
 
     li {
-      margin-left: 30px;
       position: relative;
 
       a {
-        color: #ffffff;
+        color: #f5f5f5;
         text-decoration: none;
-        padding: 12px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        font-size: 1.1rem;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        background: linear-gradient(145deg, #1a1a1a, #232323);
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
 
         &:hover {
-          background-color: #555;
-          transform: translateY(-3px);
+          background: linear-gradient(145deg, #2a2a2a, #333);
+          color: #ffd700;
+          transform: translateY(-5px) scale(1.03);
+          box-shadow: 0 0 15px #ffd70088, 0 0 5px #ffd70044 inset;
         }
       }
     }
   }
 
   @media (max-width: 768px) {
+    display: block;
+    padding: 20px;
+
     ul {
       flex-direction: column;
-      width: 100%;
+      align-items: stretch;
 
       li {
+        width: 100%;
         margin: 10px 0;
 
         a {
-          font-size: 1rem;
-          width: 100%;
           display: block;
+          width: 100%;
           text-align: center;
+          padding: 14px 20px;
+          font-size: 1rem;
+          background: linear-gradient(145deg, #1b1b1b, #262626);
+          border: 1px solid #333;
+          border-radius: 10px;
+          color: #fff;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: linear-gradient(145deg, #2c2c2c, #383838);
+            color: #ffcc00;
+            box-shadow: 0 0 12px #ffcc00aa, 0 0 6px #ffcc0044 inset;
+          }
         }
       }
     }
-    margin-top: 60px;
+  }
+
+  &.desktop-bottom-bar {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 
-const CategoryDropdown = styled.li`
+export const CategoryDropdown = styled.li`
   position: relative;
 
   > a {
@@ -425,6 +526,7 @@ const CategoryDropdown = styled.li`
     > a {
       padding: 10px 15px;
       font-size: 1rem;
+      display: block;
     }
 
     ul {
@@ -433,6 +535,7 @@ const CategoryDropdown = styled.li`
       background-color: #2a2a2a;
       border-radius: 5px;
       margin-top: 5px;
+      padding: 0;
 
       li a {
         padding: 8px 15px;
@@ -442,177 +545,132 @@ const CategoryDropdown = styled.li`
   }
 `;
 
-const Navbar = () => {
-  const { totalItems } = useCart();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useAuth();
+const slideFadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
 
-  const { language, setLanguage, currency, setCurrency } = useCurrency();
+export const MobileMenu = styled.div`
+  display: none;
 
-  const handleLanguageChange = (newLanguage) => {
-    setLanguage(newLanguage);
-  };
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    background-color: #0f0f0f;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    overflow-y: auto; /* <-- вот это нужно */
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
 
-  const handleCurrencyChange = (newCurrency) => {
-    setCurrency(newCurrency);
-  };
+    &.open {
+      transform: translateX(0);
+    }
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+    ul {
+      list-style: none;
+      padding: 30px 20px;
+      margin: 0;
+      width: 100%;
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+      li {
+        margin-bottom: 18px;
+        width: 100%;
+        opacity: 0;
+        animation: ${slideFadeIn} 0.4s ease forwards;
 
-  return (
-    <Nav>
-      <TopBar>
-        <div className="logo-container">
-          <Link to="/" className="logo">
-            <img src={LogoNavi} alt="Logo Navi" className="logo-image" />
-            <span className="logo-text">Clothing Store</span>
-          </Link>
-        </div>
-        <div className="top-bar-right">
-          <Dropdown>
-            <button>{currency}</button>
-            <ul>
-              <li>
-                <button onClick={() => handleCurrencyChange("USD")}>USD</button>
-              </li>
-              <li>
-                <button onClick={() => handleCurrencyChange("EUR")}>EUR</button>
-              </li>
-              <li>
-                <button onClick={() => handleCurrencyChange("UAH")}>UAH</button>
-              </li>
-            </ul>
-          </Dropdown>
-          <Dropdown>
-            <button>{language}</button>
-            <ul>
-              <li>
-                <button onClick={() => handleLanguageChange("English")}>
-                  English
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleLanguageChange("Ukrainian")}>
-                  Ukrainian
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleLanguageChange("Turkish")}>
-                  Turkish
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleLanguageChange("German")}>
-                  German
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleLanguageChange("Portuguese")}>
-                  Portuguese
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleLanguageChange("Spanish")}>
-                  Spanish
-                </button>
-              </li>
-            </ul>
-          </Dropdown>
-          <div className="cart-link">
-            <Link to="/cart">
-              <img src={CartIcon} alt="Cart" />
-            </Link>
-            {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
-          </div>
-          {user ? (
-            <>
-              <Link to="/account">
-                <span className="user-name">{user.name}</span>
-              </Link>
-            </>
-          ) : (
-            <button className="login-button" onClick={openModal}>
-              <img src={LoginIcon} alt="Login" />
-            </button>
-          )}
-        </div>
-      </TopBar>
-      <BottomBar>
-        <ul>
-          <li>
-            <CategoryDropdown>
-              <Link to="/category/PRO-KIT">PRO KIT</Link>
-              <ul>
-                <li>
-                  <Link to="/category/Jersey">Jersey</Link>
-                </li>
-                <li>
-                  <Link to="/category/Sleeves">Sleeves</Link>
-                </li>
-              </ul>
-            </CategoryDropdown>
-          </li>
-          <li>
-            <CategoryDropdown>
-              <Link to="/category/APPAREL">APPAREL</Link>
-              <ul>
-                <li>
-                  <Link to="/category/T-shirts">T-shirts</Link>
-                </li>
-                <li>
-                  <Link to="/category/Hoodies">Hoodies</Link>
-                </li>
-                <li>
-                  <Link to="/category/Jackets">Jackets</Link>
-                </li>
-                <li>
-                  <Link to="/category/Pants">Pants</Link>
-                </li>
-                <li>
-                  <Link to="/category/Shorts">Shorts</Link>
-                </li>
-              </ul>
-            </CategoryDropdown>
-          </li>
-          <li>
-            <CategoryDropdown>
-              <Link to="/category/ACCESSORIES">ACCESSORIES</Link>
-              <ul>
-                <li>
-                  <Link to="/category/Flag">Flag</Link>
-                </li>
-                <li>
-                  <Link to="/category/Scarf">Scarf</Link>
-                </li>
-                <li>
-                  <Link to="/category/Backpack">Backpack</Link>
-                </li>
-                <li>
-                  <Link to="/category/Suitcase">Suitcase</Link>
-                </li>
-              </ul>
-            </CategoryDropdown>
-          </li>
-          <li>
-            <Link to="/category/OUTLET">OUTLET</Link>
-          </li>
-          <li>
-            <Link to="/delivery">DELIVERY</Link>
-          </li>
-          <li>
-            <Link to="/contact">CONTACT</Link>
-          </li>
-        </ul>
-      </BottomBar>
-      {isModalOpen && <LoginModal onClose={closeModal} />}
-    </Nav>
-  );
-};
+        &:nth-child(1) {
+          animation-delay: 0.1s;
+        }
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        &:nth-child(3) {
+          animation-delay: 0.3s;
+        }
+        &:nth-child(4) {
+          animation-delay: 0.4s;
+        }
+        &:nth-child(5) {
+          animation-delay: 0.5s;
+        }
 
-export default Navbar;
+        ${Dropdown}.mobile-dropdown {
+          width: 100%;
+
+          button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #2b2b2b;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+
+            svg {
+              color: #ffcc00;
+              width: 20px;
+              height: 20px;
+              flex-shrink: 0;
+            }
+
+            &:hover {
+              background-color: #242424;
+              box-shadow: 0 0 8px #ffcc00aa;
+            }
+          }
+
+          ul {
+            background-color: #1a1a1a;
+            margin-top: 8px;
+            border-radius: 6px;
+            padding: 8px 0;
+            box-shadow: 0 0 10px #00000088;
+
+            li {
+              button {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 20px;
+                width: 100%;
+                background: none;
+                border: none;
+                color: #ddd;
+                font-size: 0.95rem;
+                transition: background-color 0.3s ease, color 0.3s ease;
+
+                svg {
+                  color: #ffcc00;
+                  width: 18px;
+                  height: 18px;
+                }
+
+                &:hover {
+                  background-color: #292929;
+                  color: #ffcc00;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

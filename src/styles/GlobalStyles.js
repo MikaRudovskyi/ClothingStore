@@ -8,6 +8,17 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     line-height: 1.6;
+
+    @media (max-width: 768px) {
+      padding-top: 60px;
+    }
+  }
+
+  body.mobile-menu-open {
+    @media (max-width: 768px) {
+      overflow: hidden;
+      height: 100vh;
+    }
   }
 
   *, *::before, *::after {
