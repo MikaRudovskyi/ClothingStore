@@ -34,10 +34,10 @@ function App() {
               <Route path="/delivery" element={<Delivery />} />
               <Route path="/contact" element={<Contacts />} />
             </Routes>
+            <Footer />
           </div>
         </CurrencyProvider>
       </CartProvider>
-      <Footer />
     </AuthProvider>
   );
 }

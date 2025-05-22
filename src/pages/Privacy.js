@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const PrivacyContainer = styled.div`
   padding: 40px 20px;
@@ -19,35 +19,34 @@ const PrivacyContainer = styled.div`
 `;
 
 const Privacy = () => {
+  const { t } = useTranslation();
+
   return (
     <PrivacyContainer>
-      <h2>Privacy Policy</h2>
+      <h2>{t("privacyPolicy")}</h2>
+      <p>{t("privacyPolicyText")}</p>
       <p>
-        As a clothing store, we take your privacy seriously. This policy
-        describes how we collect, use and protect your personal information.
+        <b>{t("privacyPolicyCollection")}</b>
+        {t("privacyPolicyCollectionText")}
       </p>
       <p>
-        <b>Collection of Information:</b> We may collect information such as
-        your name, email address, shipping address and payment details when you
-        place an order or register on our site.
+        <b>{t("privacyPolicyUse")}</b>
+        {t("privacyPolicyUseText")}
       </p>
       <p>
-        <b>Use of Information:</b> We use your information to process orders,
-        improve our site and send you news and offers (if you have subscribed).
+        <b>{t("privacyPolicySecurity")}</b>
+        {t("privacyPolicySecurityText")}
       </p>
       <p>
-        <b>Security of Information:</b> We take steps to protect your
-        information from unauthorized access.
+        <b>{t("privacyPolicyCookies")}</b>
+        {t("privacyPolicyCookiesText")}
       </p>
       <p>
-        <b>Cookies:</b> We use cookies to improve your experience of the site.{" "}
+        <b>{t("privacyPolicyChanges")}</b>
+        {t("privacyPolicyChangesText")}
       </p>
       <p>
-        <b>Changes:</b> We may update this policy, and changes will be posted on
-        this page.
-      </p>
-      <p>
-        If you have any questions, please contact us at:{" "}
+        {t("privacyPolicyQuest")}{" "}
         <a href="mailto:privacy@clothingstore.com">privacy@clothingstore.com</a>
       </p>
     </PrivacyContainer>

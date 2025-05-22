@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const DeliveryContainer = styled.div`
   padding: 80px 20px;
@@ -79,87 +79,61 @@ const Link = styled.a`
 `;
 
 const Delivery = () => {
+  const { t } = useTranslation();
+
   return (
     <DeliveryContainer>
-      <Title>Delivery & FAQ</Title>
-
+      <Title>{t("deliveryNfaq")}</Title>
       <Section>
-        <Subtitle>How long does it take to deliver my order?</Subtitle>
-        <Text>
-          We know you want to receive your merch as soon as possible, so we use
-          proven delivery services. Your order will arrive on time and in
-          perfect condition.
-        </Text>
+        <Subtitle>{t("deliverySubtitle1")}</Subtitle>
+        <Text>{t("deliveryText1")}</Text>
       </Section>
-
       <Section>
-        <Subtitle>Delivery in Ukraine</Subtitle>
-        <Text>
-          Parcels are sent via Nova Poshta. Choose delivery to your door or a
-          pick-up point. Delivery takes 3–4 business days. We'll send a tracking
-          number after your order is assembled.
-        </Text>
-        <Text>
-          Customized products may take up to 30 days. Orders placed after
-          business hours or on holidays are sent on the next working day.
-        </Text>
+        <Subtitle>{t("deliverySubtitle2")}</Subtitle>
+        <Text>{t("deliveryText2")}</Text>
+        <Text>{t("deliveryText3")}</Text>
       </Section>
-
       <Section>
-        <Subtitle>Worldwide Shipping</Subtitle>
+        <Subtitle>{t("deliverySubtitle3")}</Subtitle>
         <Text>
-          We ship worldwide with Ukrposhta. See available countries{" "}
+          {t("deliveryText4")}{" "}
           <Link
             href="https://www.ukrposhta.ua/en"
             target="_blank"
             rel="noopener noreferrer"
           >
-            here
+            {t("deliveryTextHere")}
           </Link>
           .
         </Text>
-        <Text>
-          Average delivery time is 20–30 days (CIS, Europe, USA), and 30–40 days
-          elsewhere. Orders are shipped on Mon/Wed/Fri (except holidays).
-        </Text>
+        <Text>{t("deliveryText5")}</Text>
       </Section>
-
       <Section>
-        <Subtitle>Return and Exchange</Subtitle>
+        <Subtitle>{t("deliverySubtitle4")}</Subtitle>
         <List>
-          <ListItem>Keep the receipt and original packaging.</ListItem>
-          <ListItem>Don't wear the item or remove tags.</ListItem>
-          <ListItem>Return within 14 days of receiving the order.</ListItem>
-          <ListItem>Customized goods cannot be returned or exchanged.</ListItem>
-          <ListItem>
-            If the product doesn’t fit — return shipping is on you.
-          </ListItem>
-          <ListItem>
-            If defective or our mistake — we cover return shipping.
-          </ListItem>
+          <ListItem>{t("deliveryItem1")}</ListItem>
+          <ListItem>{t("deliveryItem2")}</ListItem>
+          <ListItem>{t("deliveryItem3")}</ListItem>
+          <ListItem>{t("deliveryItem4")}</ListItem>
+          <ListItem>{t("deliveryItem5")}</ListItem>
+          <ListItem>{t("deliveryItem6")}</ListItem>
         </List>
-        <Text>
-          Refunds are processed within 30 days. Delivery and transfer fees may
-          be deducted.
-        </Text>
+        <Text>{t("deliveryText6")} </Text>
       </Section>
-
       <Section>
-        <Subtitle>How Can I Pay for My Order?</Subtitle>
+        <Subtitle>{t("deliverySubtitle5")}</Subtitle>
         <List>
           <ListItem>
-            <strong>Bank Card:</strong> Secure LiqPay payments (Visa,
-            Mastercard).
+            <strong>{t("bankCard")}</strong> {t("deliveryItem7")}
           </ListItem>
           <ListItem>
-            <strong>Cash on Delivery:</strong> Nova Poshta only (20 UAH + 2% of
-            the order).
+            <strong>{t("cashOn")}</strong> {t("deliveryItem8")}
           </ListItem>
           <ListItem>
-            <strong>PayPal:</strong> No extra contact needed.
+            <strong>{t("paypal")}</strong> {t("deliveryItem9")}
           </ListItem>
           <ListItem>
-            <strong>Bank Transfer:</strong> For bulk orders, email us at{" "}
+            <strong>{t("bankTransfer")}</strong> {t("deliveryItem10")}{" "}
             <Link href="mailto:order@navi.gg">order@navi.gg</Link>.
           </ListItem>
         </List>

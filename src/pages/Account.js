@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../context/AuthContext";
 import { updateUser } from "../components/loginComponents/LoginModal.api";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const AccountContainer = styled.div`
@@ -124,6 +125,7 @@ const Account = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [updatedUser, setUpdatedUser] = useState(user || {});
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!user) {
@@ -140,7 +142,7 @@ const Account = () => {
   const handleLogout = () => {
     logout();
     localStorage.removeItem("user");
-    toast.success("Logged out successfully!", {
+    toast.success(t("toastAccountLogged"), {
       position: "bottom-right",
       theme: "dark",
     });
@@ -154,7 +156,7 @@ const Account = () => {
     try {
       let currentUser = JSON.parse(localStorage.getItem("user"));
       if (!currentUser?.id) {
-        toast.error("User ID missing!", {
+        toast.error(t("toastAccountMissing"), {
           position: "bottom-right",
           theme: "dark",
         });
@@ -170,12 +172,12 @@ const Account = () => {
 
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      toast.success("Changes saved successfully!", {
+      toast.success(t("toastAccountChanges"), {
         position: "bottom-right",
         theme: "dark",
       });
     } catch (error) {
-      toast.error(`Error: ${error.message}`, {
+      toast.error(`t("error") ${error.message}`, {
         position: "bottom-right",
         theme: "dark",
       });
@@ -185,30 +187,30 @@ const Account = () => {
   return (
     <>
       <AccountContainer>
-        <Title>Account Settings</Title>
+        <Title>{t("accountSettings")}</Title>
         <Form>
-          <label>Your Name</label>
+          <label>{t("yourName")}</label>
           <input
             type="text"
             name="name"
             value={updatedUser.name || ""}
             onChange={handleChange}
           />
-          <label>Email</label>
+          <label>{t("email")}</label>
           <input
             type="email"
             name="email"
             value={updatedUser.email || ""}
             readOnly
           />
-          <label>Phone Number</label>
+          <label>{t("phoneNumber")}</label>
           <input
             type="text"
             name="phone"
             value={updatedUser.phone || ""}
             onChange={handleChange}
           />
-          <label>Address</label>
+          <label>{t("address")}</label>
           <input
             type="text"
             name="address"
@@ -216,10 +218,10 @@ const Account = () => {
             onChange={handleChange}
           />
           <Button type="button" onClick={handleSave}>
-            Save
+            {t("save")}
           </Button>
           <LogoutButton type="button" onClick={handleLogout}>
-            Log out
+            {t("logOut")}
           </LogoutButton>
         </Form>
       </AccountContainer>

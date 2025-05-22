@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import products from "../data/products";
 import ProductCard from "../components/productComponents/ProductCard";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   padding: 20px;
@@ -46,6 +47,7 @@ const SortSelect = styled.select`
 const Category = () => {
   const { category } = useParams();
   const [sortOption, setSortOption] = useState("default");
+  const { t } = useTranslation();
 
   const filteredProducts = products.filter(
     (product) => product.categories && product.categories.includes(category)
@@ -78,11 +80,11 @@ const Category = () => {
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
-          <option value="default">By default</option>
-          <option value="priceAsc">By price ↑</option>
-          <option value="priceDesc">By price ↓</option>
-          <option value="nameAsc">By name (A-Z)</option>
-          <option value="nameDesc">By name (Z-A)</option>
+          <option value="default">{t("byDef")}</option>
+          <option value="priceAsc">{t("byPrUp")}</option>
+          <option value="priceDesc">{t("byPrDown")}</option>
+          <option value="nameAsc">{t("byNameAZ")}</option>
+          <option value="nameDesc">{t("byNameZA")}</option>
         </SortSelect>
       </TopBar>
 

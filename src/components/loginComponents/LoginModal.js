@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { registerUser, loginUser } from "./LoginModal.api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 const fadeIn = keyframes`
@@ -304,6 +305,7 @@ const LoginModal = ({ onClose }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -316,7 +318,7 @@ const LoginModal = ({ onClose }) => {
           localStorage.setItem("user", JSON.stringify(response.user));
           localStorage.setItem("token", response.token);
         }
-        toast.success("Registration successful!");
+        toast.success(t("toastReg"));
         onClose();
         navigate("/");
       } else {
@@ -327,7 +329,7 @@ const LoginModal = ({ onClose }) => {
           localStorage.setItem("user", JSON.stringify(response.user));
           localStorage.setItem("token", response.token);
         }
-        toast.success("Login successful!");
+        toast.success(t("toastLog"));
         onClose();
         navigate("/account");
       }
@@ -336,7 +338,7 @@ const LoginModal = ({ onClose }) => {
         "Error:",
         error.response ? error.response.data : error.message
       );
-      toast.error("An error occurred.");
+      toast.error(t("toastError"));
     }
   };
 
@@ -349,31 +351,31 @@ const LoginModal = ({ onClose }) => {
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>×</CloseButton>
-        <Title>{isRegistering ? "REGISTRATION" : "FILL THE FORM"}</Title>
+        <Title>{isRegistering ? t("registration") : t("fillTheForm")}</Title>
         <Form onSubmit={handleSubmit}>
           {isRegistering && (
             <>
-              <label htmlFor="name">Your name</label>
+              <label htmlFor="name">{t("yourName")}</label>
               <input
                 type="text"
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                placeholder="Enter your Name"
+                placeholder={t("enterYourName")}
               />
-              <label htmlFor="phone">Phone number</label>
+              <label htmlFor="phone">{t("phoneNumber")}</label>
               <input
                 type="tel"
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
-                placeholder="Enter phone"
+                placeholder={t("enterPhone")}
               />
             </>
           )}
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("email")}</label>
           <input
             type="email"
             id="email"
@@ -382,7 +384,7 @@ const LoginModal = ({ onClose }) => {
             required
             placeholder="example@example.com"
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("password")}</label>
           <input
             type="password"
             id="password"
@@ -402,27 +404,29 @@ const LoginModal = ({ onClose }) => {
                 />
                 <Slider />
               </Switch>
-              <SwitchLabel htmlFor="remember">Remember me</SwitchLabel>
+              <SwitchLabel htmlFor="remember">{t("rememberMe")}</SwitchLabel>
               <ForgotPasswordLink href="#">
-                Do not remember the password?
+                {t("dontRememberPass")}
               </ForgotPasswordLink>
             </RememberMe>
           )}
-          <button type="submit">{isRegistering ? "SIGN UP" : "LOGIN"}</button>
+          <button type="submit">
+            {isRegistering ? t("signUp") : t("loginCaps")}
+          </button>
         </Form>
         <SignUp>
           {isRegistering ? (
             <>
-              Already have an account?{" "}
+              {t("alreadyAcc")}{" "}
               <a href="#" onClick={toggleRegister}>
-                Login
+                {t("login")}
               </a>
             </>
           ) : (
             <>
-              Don't have an account?{" "}
+              {t("dontHaveAcc")}{" "}
               <a href="#" onClick={toggleRegister}>
-                Register
+                {t("register")}
               </a>
             </>
           )}

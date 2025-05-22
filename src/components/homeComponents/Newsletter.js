@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import bgImage from "../../assets/images/banners/newsletter-bg.png";
 import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewsletterContainer = styled.div`
@@ -108,12 +109,13 @@ const NewsletterContainer = styled.div`
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         "service_nzi1h5l",
         "template_cssy30s",
         {
@@ -122,15 +124,13 @@ const Newsletter = () => {
         "5o8HIhpD-d843oCQ7"
       );
 
-      console.log("SUCCESS!", result.text);
-      toast.success("Subscription successfully completed!", {
+      toast.success(t("toastSubscription"), {
         position: "bottom-right",
         theme: "dark",
       });
       setEmail("");
-    } catch (error) {
-      console.error("FAILED...", error);
-      toast.error("An error occurred. Please try again later.", {
+    } catch {
+      toast.error(t("toastError"), {
         position: "bottom-right",
         theme: "dark",
       });
@@ -140,17 +140,17 @@ const Newsletter = () => {
   return (
     <>
       <NewsletterContainer>
-        <h2>Subscribe to the newsletter</h2>
-        <p>Receive notifications about new arrivals and discounts.</p>
+        <h2>{t("subscribeNewsletter")}</h2>
+        <p>{t("receiveNotifications")}</p>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder={t("enterEmail")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <button type="submit">Subscribe</button>
+          <button type="submit">{t("subscribe")}</button>
         </form>
       </NewsletterContainer>
       <ToastContainer />

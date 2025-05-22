@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const BannerContainer = styled.div`
   background: linear-gradient(135deg, #ffd700, #ffa500);
@@ -47,11 +47,13 @@ const Button = styled.button`
 `;
 
 const Banner = ({ scrollToBestOffers }) => {
+  const { t } = useTranslation();
+
   return (
     <BannerContainer>
-      <Title>New collection!</Title>
-      <Subtitle>Check out our latest arrivals.</Subtitle>
-      <Button onClick={scrollToBestOffers}>Watch now</Button>
+      <Title>{t("newcollection")}</Title>
+      <Subtitle>{t("checkout")}</Subtitle>
+      <Button onClick={scrollToBestOffers}>{t("watchnow")}</Button>
     </BannerContainer>
   );
 };

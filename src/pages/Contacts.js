@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const ContactsWrapper = styled.div`
@@ -127,6 +128,7 @@ const Spinner = styled.div`
 const Contacts = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -137,7 +139,7 @@ const Contacts = () => {
 
     setTimeout(() => {
       setLoading(false);
-      toast.success("Message sent successfully!", {
+      toast.success(t("toastMessage"), {
         position: "bottom-right",
         theme: "dark",
       });
@@ -148,20 +150,20 @@ const Contacts = () => {
   return (
     <ContactsWrapper>
       <FormContainer>
-        <Title>Contacts</Title>
-        <Subtitle>Feedback</Subtitle>
+        <Title>{t("contacts")}</Title>
+        <Subtitle>{t("feedback")}</Subtitle>
         <form onSubmit={handleSubmit}>
-          <Label>Your name*</Label>
+          <Label>{t("yourName")}*</Label>
           <Input
             type="text"
             name="name"
-            placeholder="Enter your name"
+            placeholder={t("enterYourName")}
             value={form.name}
             onChange={handleChange}
             required
           />
 
-          <Label>Email*</Label>
+          <Label>{t("email")}*</Label>
           <Input
             type="email"
             name="email"
@@ -171,10 +173,10 @@ const Contacts = () => {
             required
           />
 
-          <Label>Write your question*</Label>
+          <Label>{t("writeYourQuest")}*</Label>
           <Textarea
             name="message"
-            placeholder="Write your question"
+            placeholder={t("writeYourQuest")}
             value={form.message}
             onChange={handleChange}
             required
@@ -183,11 +185,11 @@ const Contacts = () => {
           <SubmitButton type="submit" disabled={loading}>
             {loading ? (
               <>
-                Sending...
+                {t("sending")}
                 <Spinner />
               </>
             ) : (
-              "Send"
+              t("send")
             )}
           </SubmitButton>
         </form>

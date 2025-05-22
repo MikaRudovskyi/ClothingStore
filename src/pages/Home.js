@@ -11,6 +11,7 @@ import banner2 from "../assets/images/banners/banner2.png";
 import banner3 from "../assets/images/banners/banner3.png";
 import aboutUsImage from "../assets/images/banners/about-us.png";
 import Modal from "../components/homeComponents/Modal";
+import { useTranslation } from "react-i18next";
 
 const ProductList = styled.div`
   display: flex;
@@ -121,6 +122,7 @@ const Home = () => {
   const sliderImages = [banner1, banner2, banner3];
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const bestOffersRef = useRef(null);
+  const { t } = useTranslation();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -138,10 +140,10 @@ const Home = () => {
   return (
     <div>
       <Banner scrollToBestOffers={scrollToBestOffers} />
-      <PageTitle>Home</PageTitle>
+      <PageTitle>{t("home")}</PageTitle>
       <ImageSlider images={sliderImages} />
       <BestOffers ref={bestOffersRef}>
-        <h2>Best Offers</h2>
+        <h2>{t("bestoffers")}</h2>
         <ProductList>
           {bestOffersProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
@@ -149,50 +151,30 @@ const Home = () => {
         </ProductList>
       </BestOffers>
       <AboutUsContainer>
-        <h2>About Us</h2>
+        <h2>{t("aboutus")}</h2>
         <div className="about-content">
           <div className="about-text">
-            <h3>Official NAVI Gear</h3>
-            <p>
-              All products on this site are official Natus Vincere merchandise.
-              We've transitioned to in-house production, forming our own team of
-              designers and quality control specialists.
-            </p>
-            <h3>NAVI Essentials</h3>
-            <p>
-              Our initial line features essential items: t-shirts, hoodies,
-              pants, and jackets. We plan to continuously expand our offerings,
-              so every fan can find a way to express their support.
-            </p>
+            <h3>{t("navigear")}</h3>
+            <p>{t("navigeartext")}</p>
+            <h3>{t("naviessentials")}</h3>
+            <p>{t("naviessentialstext")}</p>
           </div>
           <div className="about-image">
             <img src={aboutUsImage} alt="О нас" />
           </div>
         </div>
         <button className="cta-button" onClick={openModal}>
-          Find Out More
+          {t("findout")}
         </button>
       </AboutUsContainer>
       <Newsletter />
       <Testimonials />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2>Our Values</h2>
-        <p>
-          Quality: We carefully select suppliers and monitor the quality of each
-          product we offer to our customers.
-        </p>
-        <p>
-          Style: We follow the latest fashion trends and offer only the latest
-          clothing models.
-        </p>
-        <p>
-          Individuality: We believe that every person is unique and offer
-          clothing that will help you highlight your individuality.
-        </p>
-        <p>
-          Service: We strive to provide a high level of service and are always
-          ready to help our clients.
-        </p>
+        <h2>{t("ourvalues")}</h2>
+        <p>{t("ourvaluesQuality")}</p>
+        <p>{t("ourvaluesStyle")}</p>
+        <p>{t("ourvaluesIndividuality")}</p>
+        <p>{t("ourvaluesService")}</p>
       </Modal>
     </div>
   );

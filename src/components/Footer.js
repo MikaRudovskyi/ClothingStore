@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const FooterContainer = styled.footer`
   background-color: #1e1e1e;
@@ -32,14 +32,16 @@ const FooterContainer = styled.footer`
 `;
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <FooterContainer>
       <p>
-        &copy; {new Date().getFullYear()} Clothing Store. All rights reserved.
+        &copy; {new Date().getFullYear()} {t("allrights")}
       </p>
       <p>
-        <a href="/privacy">Privacy Policy</a> |{" "}
-        <a href="/terms">Terms of Use</a>
+        <a href="/privacy">{t("privacyPolicy")}</a> |{" "}
+        <a href="/terms">{t("termsOfUse")}</a>
       </p>
       <div className="social-links">
         <a href="https://www.facebook.com/NatusVincere">

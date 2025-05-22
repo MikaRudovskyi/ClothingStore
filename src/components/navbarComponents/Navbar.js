@@ -9,6 +9,7 @@ import LogoNavi from "../../assets/images/logo/navi_logo.png";
 import LoginModal from "../loginComponents/LoginModal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { ChevronDown, Globe, DollarSign } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   Nav,
   TopBar,
@@ -22,10 +23,19 @@ const Navbar = () => {
   const { totalItems } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
   const { language, setLanguage, currency, setCurrency } = useCurrency();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+
+  const languages = [
+    { code: "English", labelKey: "english" },
+    { code: "Ukrainian", labelKey: "ukrainian" },
+    { code: "German", labelKey: "german" },
+    { code: "Spanish", labelKey: "spanish" },
+    { code: "French", labelKey: "french" },
+  ];
 
   useEffect(() => {
     const body = document.body;
@@ -43,8 +53,9 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const handleLanguageChange = (newLanguage) => {
-    setLanguage(newLanguage);
+  const handleLanguageChange = (code) => {
+    setLanguage(code);
+    i18n.changeLanguage(code);
   };
 
   const handleCurrencyChange = (newCurrency) => {
@@ -82,48 +93,44 @@ const Navbar = () => {
         </div>
         <div className="top-bar-right">
           <Dropdown className="desktop-dropdown">
-            <button>
+            <button onClick={toggleCurrencyDropdown}>
               <DollarSign
                 size={18}
                 style={{ marginRight: "8px", verticalAlign: "middle" }}
               />
               {currency}
             </button>
-            <ul>
-              {["USD", "EUR", "UAH"].map((cur) => (
-                <li key={cur}>
-                  <button onClick={() => handleCurrencyChange(cur)}>
-                    {cur}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {currencyDropdownOpen && (
+              <ul>
+                {["USD", "EUR", "UAH"].map((cur) => (
+                  <li key={cur}>
+                    <button onClick={() => handleCurrencyChange(cur)}>
+                      {cur}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </Dropdown>
-
           <Dropdown className="desktop-dropdown">
-            <button>
+            <button onClick={toggleLanguageDropdown}>
               <Globe
                 size={18}
                 style={{ marginRight: "8px", verticalAlign: "middle" }}
               />
-              {language}
+              {t(language.toLowerCase())}
             </button>
-            <ul>
-              {[
-                "English",
-                "Ukrainian",
-                "Turkish",
-                "German",
-                "Portuguese",
-                "Spanish",
-              ].map((lang) => (
-                <li key={lang}>
-                  <button onClick={() => handleLanguageChange(lang)}>
-                    {lang}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {languageDropdownOpen && (
+              <ul>
+                {languages.map(({ code, labelKey }) => (
+                  <li key={code}>
+                    <button onClick={() => handleLanguageChange(code)}>
+                      {t(labelKey)}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </Dropdown>
           <div className="cart-link">
             <Link to="/cart">
@@ -166,20 +173,13 @@ const Navbar = () => {
           <li>
             <Dropdown className="mobile-dropdown">
               <button onClick={toggleLanguageDropdown}>
-                <Globe /> {language} <ChevronDown />
+                <Globe /> {t(language.toLowerCase())} <ChevronDown />
               </button>
               <ul style={{ display: languageDropdownOpen ? "block" : "none" }}>
-                {[
-                  "English",
-                  "Ukrainian",
-                  "Turkish",
-                  "German",
-                  "Portuguese",
-                  "Spanish",
-                ].map((lang) => (
-                  <li key={lang}>
-                    <button onClick={() => handleLanguageChange(lang)}>
-                      {lang}
+                {languages.map(({ code, labelKey }) => (
+                  <li key={code}>
+                    <button onClick={() => handleLanguageChange(code)}>
+                      {t(labelKey)}
                     </button>
                   </li>
                 ))}
@@ -191,66 +191,66 @@ const Navbar = () => {
           <ul>
             <li>
               <CategoryDropdown>
-                <Link to="/category/PRO-KIT">PRO KIT</Link>
+                <Link to="/category/PRO-KIT">{t("proKit")}</Link>
                 <ul>
                   <li>
-                    <Link to="/category/Jersey">Jersey</Link>
+                    <Link to="/category/Jersey">{t("jersey")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Sleeves">Sleeves</Link>
+                    <Link to="/category/Sleeves">{t("sleeves")}</Link>
                   </li>
                 </ul>
               </CategoryDropdown>
             </li>
             <li>
               <CategoryDropdown>
-                <Link to="/category/APPAREL">APPAREL</Link>
+                <Link to="/category/APPAREL">{t("apparel")}</Link>
                 <ul>
                   <li>
-                    <Link to="/category/T-shirts">T-shirts</Link>
+                    <Link to="/category/T-shirts">{t("tShirts")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Hoodies">Hoodies</Link>
+                    <Link to="/category/Hoodies">{t("hoodies")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Jackets">Jackets</Link>
+                    <Link to="/category/Jackets">{t("jackets")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Pants">Pants</Link>
+                    <Link to="/category/Pants">{t("pants")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Shorts">Shorts</Link>
+                    <Link to="/category/Shorts">{t("shorts")}</Link>
                   </li>
                 </ul>
               </CategoryDropdown>
             </li>
             <li>
               <CategoryDropdown>
-                <Link to="/category/ACCESSORIES">ACCESSORIES</Link>
+                <Link to="/category/ACCESSORIES">{t("accessories")}</Link>
                 <ul>
                   <li>
-                    <Link to="/category/Flag">Flag</Link>
+                    <Link to="/category/Flag">{t("flag")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Scarf">Scarf</Link>
+                    <Link to="/category/Scarf">{t("scarf")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Backpack">Backpack</Link>
+                    <Link to="/category/Backpack">{t("backpack")}</Link>
                   </li>
                   <li>
-                    <Link to="/category/Suitcase">Suitcase</Link>
+                    <Link to="/category/Suitcase">{t("suitcase")}</Link>
                   </li>
                 </ul>
               </CategoryDropdown>
             </li>
             <li>
-              <Link to="/category/OUTLET">OUTLET</Link>
+              <Link to="/category/OUTLET">{t("outlet")}</Link>
             </li>
             <li>
-              <Link to="/delivery">DELIVERY</Link>
+              <Link to="/delivery">{t("delivery")}</Link>
             </li>
             <li>
-              <Link to="/contact">CONTACT</Link>
+              <Link to="/contact">{t("contact")}</Link>
             </li>
           </ul>
         </BottomBar>
@@ -259,66 +259,66 @@ const Navbar = () => {
         <ul>
           <li>
             <CategoryDropdown>
-              <Link to="/category/PRO-KIT">PRO KIT</Link>
+              <Link to="/category/PRO-KIT">{t("proKit")}</Link>
               <ul>
                 <li>
-                  <Link to="/category/Jersey">Jersey</Link>
+                  <Link to="/category/Jersey">{t("jersey")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Sleeves">Sleeves</Link>
+                  <Link to="/category/Sleeves">{t("sleeves")}</Link>
                 </li>
               </ul>
             </CategoryDropdown>
           </li>
           <li>
             <CategoryDropdown>
-              <Link to="/category/APPAREL">APPAREL</Link>
+              <Link to="/category/APPAREL">{t("apparel")}</Link>
               <ul>
                 <li>
-                  <Link to="/category/T-shirts">T-shirts</Link>
+                  <Link to="/category/T-shirts">{t("tShirts")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Hoodies">Hoodies</Link>
+                  <Link to="/category/Hoodies">{t("hoodies")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Jackets">Jackets</Link>
+                  <Link to="/category/Jackets">{t("jackets")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Pants">Pants</Link>
+                  <Link to="/category/Pants">{t("pants")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Shorts">Shorts</Link>
+                  <Link to="/category/Shorts">{t("shorts")}</Link>
                 </li>
               </ul>
             </CategoryDropdown>
           </li>
           <li>
             <CategoryDropdown>
-              <Link to="/category/ACCESSORIES">ACCESSORIES</Link>
+              <Link to="/category/ACCESSORIES">{t("accessories")}</Link>
               <ul>
                 <li>
-                  <Link to="/category/Flag">Flag</Link>
+                  <Link to="/category/Flag">{t("flag")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Scarf">Scarf</Link>
+                  <Link to="/category/Scarf">{t("scarf")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Backpack">Backpack</Link>
+                  <Link to="/category/Backpack">{t("backpack")}</Link>
                 </li>
                 <li>
-                  <Link to="/category/Suitcase">Suitcase</Link>
+                  <Link to="/category/Suitcase">{t("suitcase")}</Link>
                 </li>
               </ul>
             </CategoryDropdown>
           </li>
           <li>
-            <Link to="/category/OUTLET">OUTLET</Link>
+            <Link to="/category/OUTLET">{t("outlet")}</Link>
           </li>
           <li>
-            <Link to="/delivery">DELIVERY</Link>
+            <Link to="/delivery">{t("delivery")}</Link>
           </li>
           <li>
-            <Link to="/contact">CONTACT</Link>
+            <Link to="/contact">{t("contact")}</Link>
           </li>
         </ul>
       </BottomBar>

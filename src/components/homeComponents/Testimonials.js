@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const TestimonialsContainer = styled.div`
   padding: 40px 20px;
@@ -31,27 +31,28 @@ const TestimonialsContainer = styled.div`
 `;
 
 const Testimonials = () => {
+  const { t } = useTranslation();
   const testimonials = [
     {
       id: 1,
-      text: "Great store! Quality clothes and fast delivery.",
-      author: "Aleksi Virolainen",
+      text: t("testimonialsText1"),
+      author: t("testimonialsAuthor1"),
     },
     {
       id: 2,
-      text: "Very happy with the purchase. Will order more!",
-      author: "Justinas Lekavičius",
+      text: t("testimonialsText2"),
+      author: t("testimonialsAuthor2"),
     },
     {
       id: 3,
-      text: "Thank you for the great service! I recommend to everyone.",
-      author: "Mihai Ivan",
+      text: t("testimonialsText3"),
+      author: t("testimonialsAuthor3"),
     },
   ];
 
   return (
     <TestimonialsContainer>
-      <h2>Customer Reviews</h2>
+      <h2>{t("customersReviews")}</h2>
       <div className="testimonials">
         {testimonials.map((testimonial) => (
           <div className="testimonial" key={testimonial.id}>

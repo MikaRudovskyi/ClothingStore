@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { useCart } from "./CartContext";
 import { useCurrency } from "../CurrencyContext";
+import { useTranslation } from "react-i18next";
 
 const CartStyled = styled.div`
   padding: 30px;
@@ -126,6 +126,7 @@ const Cart = () => {
   const { cartItems, removeFromCart, decreaseQuantity, increaseQuantity } =
     useCart();
   const { currency, currencyRates, currencySymbols } = useCurrency();
+  const { t } = useTranslation();
 
   const calculateTotal = () => {
     return cartItems.reduce(
@@ -154,9 +155,9 @@ const Cart = () => {
 
   return (
     <CartStyled>
-      <h2>Cart</h2>
+      <h2>{t("cart")}</h2>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p>{t("cartIsEmpty")}</p>
       ) : (
         <>
           <ul>
@@ -192,14 +193,14 @@ const Cart = () => {
                     +
                   </button>
                   <button onClick={() => removeFromCart(item.id, item.size)}>
-                    Remove
+                    {t("remove")}
                   </button>
                 </div>
               </li>
             ))}
           </ul>
           <p>
-            Total: {symbol} {formattedTotal}
+            {t("total")}: {symbol} {formattedTotal}
           </p>
         </>
       )}
