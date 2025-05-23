@@ -5,6 +5,7 @@ import styled, { keyframes, css } from "styled-components";
 import { useCart } from "../cartComponents/CartContext";
 import { useCurrency } from "../CurrencyContext";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 
 const pulseAnimation = keyframes`
@@ -298,6 +299,7 @@ const ProductDetails = () => {
   );
   const { currency, currencyRates, currencySymbols } = useCurrency();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -327,7 +329,7 @@ const ProductDetails = () => {
     addToCart({ ...product, size: selectedSize || null });
     setAnimateButton(true);
 
-    toast.success("Product added to cart!", {
+    toast.success(t("productAdded"), {
       position: "bottom-right",
       theme: "dark",
     });
@@ -412,14 +414,14 @@ const ProductDetails = () => {
 
       <InfoWrapper>
         <h2>{product.name}</h2>
-        <p>{product.description}</p>
+        <p>{t(product.description)} </p>
 
         {product.specifications && (
           <>
-            <h3>Specifications:</h3>
+            <h3>{t("specifications")}</h3>
             <ul>
               {Object.entries(product.specifications).map(([key, value]) => (
-                <li key={key}>{value}</li>
+                <li key={key}>{t(value)}</li>
               ))}
             </ul>
           </>
@@ -427,23 +429,23 @@ const ProductDetails = () => {
 
         {product.colour && (
           <p>
-            <strong>Colour:</strong> {product.colour}
+            <strong>{t("colour")}</strong> {t(product.colour)}
           </p>
         )}
         {product.composition && (
           <p>
-            <strong>Composition:</strong> {product.composition}
+            <strong>{t("composition")}</strong> {t(product.composition)}
           </p>
         )}
         {product.care && (
           <p>
-            <strong>Care:</strong> {product.care}
+            <strong>{t("care")}</strong> {t(product.care)}
           </p>
         )}
 
         {availableSizes.length > 0 && (
           <div>
-            <strong>Choose Size:</strong>
+            <strong>{t("chooseSize")}</strong>
             <SizeSelector>
               {availableSizes.map((size) => (
                 <SizeButton
@@ -459,11 +461,11 @@ const ProductDetails = () => {
         )}
 
         <p>
-          <strong>Price:</strong> {symbol} {formattedPrice}
+          <strong>{t("price")}</strong> {symbol} {formattedPrice}
         </p>
 
         <Button onClick={handleAddToCart} animate={animateButton}>
-          {animateButton ? "Adding..." : "Add to Cart"}
+          {animateButton ? t("adding") : t("addToCart")}
         </Button>
       </InfoWrapper>
 

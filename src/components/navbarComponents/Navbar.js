@@ -30,12 +30,14 @@ const Navbar = () => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
 
   const languages = [
-    { code: "English", labelKey: "english" },
-    { code: "Ukrainian", labelKey: "ukrainian" },
-    { code: "German", labelKey: "german" },
-    { code: "Spanish", labelKey: "spanish" },
-    { code: "French", labelKey: "french" },
+    { code: "en", labelKey: "english" },
+    { code: "uk", labelKey: "ukrainian" },
+    { code: "de", labelKey: "german" },
+    { code: "es", labelKey: "spanish" },
+    { code: "fr", labelKey: "french" },
   ];
+
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
 
   useEffect(() => {
     const body = document.body;
@@ -118,7 +120,7 @@ const Navbar = () => {
                 size={18}
                 style={{ marginRight: "8px", verticalAlign: "middle" }}
               />
-              {t(language.toLowerCase())}
+              {t(currentLanguage?.labelKey)}
             </button>
             {languageDropdownOpen && (
               <ul>
@@ -173,7 +175,7 @@ const Navbar = () => {
           <li>
             <Dropdown className="mobile-dropdown">
               <button onClick={toggleLanguageDropdown}>
-                <Globe /> {t(language.toLowerCase())} <ChevronDown />
+                <Globe /> {t(currentLanguage?.labelKey)} <ChevronDown />
               </button>
               <ul style={{ display: languageDropdownOpen ? "block" : "none" }}>
                 {languages.map(({ code, labelKey }) => (

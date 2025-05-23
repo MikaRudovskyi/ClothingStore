@@ -107,11 +107,10 @@ const products = [
     categories: ["T-shirts", "APPAREL", "Jersey", "PRO-KIT"], // PRO-KIT T-shirt
     price: 35,
     images: [naviprokitоjersey, naviprokitоjersey2, naviprokitоjersey3],
-    description:
-      "Step into the future of esports with the NAVI Jersey 2025. Designed for peak performance and unmatched style, this jersey is your ticket to repping NAVI pride. With a bold design and breathable fabric, it’s perfect for every fan, on and off the battlefield.",
+    description: "productsDescription1",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   {
@@ -124,11 +123,10 @@ const products = [
       navixpumaprokitgameday2,
       navixpumaprokitgameday3,
     ],
-    description:
-      "Gameday NAVI Jersey made in collaboration with PUMA. The vibrant Yellow line rushes through the uniform just like NAVI players rush on their way to trophies. Wear the NAVI Pro Kit and paint the world in black and yellow.",
+    description: "productsDescription2",
     colour: "Black",
     composition: "95% Polyester, 5% Elastane",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -141,11 +139,10 @@ const products = [
       navixpumatshirtpumablack2,
       navixpumatshirtpumablack3,
     ],
-    description:
-      "Obsession with the game. Obsession with winning. The T-Shirt from NAVI x PUMA 2023 collection is complemented with a printed design on the front and logotypes of NAVI and PUMA on the back.",
+    description: "productsDescription3",
     colour: "Black",
     composition: "95% Cotton, 5% Elastane",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -154,11 +151,10 @@ const products = [
     categories: ["T-shirts", "APPAREL", "OUTLET"], // OUTLET T-shirt
     price: 10,
     images: [tshirtvenusvincere, tshirtvenusvincere2, tshirtvenusvincere3],
-    description:
-      "This universe needs more NAVI Girls. Declare your existence in this very status with our T-shirt from the women's collection.",
+    description: "productsDescription4",
     colour: "Black",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -171,11 +167,10 @@ const products = [
       navixpumatshirteamviolet2,
       navixpumatshirteamviolet3,
     ],
-    description:
-      "Command attention on and off the screen with the NAVI Tees in Glowing Pink and Glowing Violet. Engineered for comfort and style, these tees are perfect for intense gaming sessions or a day out. Their vibrant colors symbolize energy and passion, making you the focal point wherever you go.",
+    description: "productsDescription5",
     colour: "Violet",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -188,11 +183,10 @@ const products = [
       navixpumatshirtglowingpink2,
       navixpumatshirtglowingpink3,
     ],
-    description:
-      "Command attention on and off the screen with the NAVI Tees in Glowing Pink and Glowing Violet. Engineered for comfort and style, these tees are perfect for intense gaming sessions or a day out. Their vibrant colors symbolize energy and passion, making you the focal point wherever you go.",
+    description: "productsDescription5",
     colour: "Pink",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   // APPAREL Hoodies
@@ -206,11 +200,10 @@ const products = [
       navixpumahoodiepumablack2,
       navixpumahoodiepumablack3,
     ],
-    description:
-      "Obsession with the game. Obsession with winning. The black hoodie piece from NAVI x PUMA 2025 collection is complemented with a printed design on the front and logotypes of NAVI and PUMA on the right sleeve.",
+    description: "productsDescription6",
     colour: "Black",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -223,11 +216,10 @@ const products = [
       navimasterstokyo2023hoodie2,
       navimasterstokyo2023hoodie3,
     ],
-    description:
-      "Energize your style with the electrifying  vibe! Wear this Valorant-inspired Hoodie and show your support for your favorite team in a fashionable way!",
+    description: "productsDescription7",
     colour: "Black",
     composition: "70% Cotton 30% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -240,11 +232,10 @@ const products = [
       navixpumahoodieteamviolet2,
       navixpumahoodieteamviolet3,
     ],
-    description:
-      "Experience the ultimate in comfort with our NAVI Hoodies, available in eye-catching Glowing Pink and deep Team Violet. Ideal for gaming marathons or outdoor activities, these hoodies offer a soft yet durable fabric that keeps you warm while adding a burst of color to your athletic or casual endeavors.",
+    description: "productsDescription8",
     colour: "Violet",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -257,11 +248,10 @@ const products = [
       navixpumahoodieglowingpink2,
       navixpumahoodieglowingpink3,
     ],
-    description:
-      "Experience the ultimate in comfort with our NAVI Hoodies, available in eye-catching Glowing Pink and deep Team Violet. Ideal for gaming marathons or outdoor activities, these hoodies offer a soft yet durable fabric that keeps you warm while adding a burst of color to your athletic or casual endeavors.",
+    description: "productsDescription8",
     colour: "Pink",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -274,11 +264,10 @@ const products = [
       patronhoodienavixhappypawblack2,
       patronhoodienavixhappypawblack3,
     ],
-    description:
-      "Hoodie with the cutest dog with a real job - Patron. If he had not been a sapper, he could have become a successful model. All proceeds from the sale of this hoodie will be donated to charity foundation Happy Paw.",
+    description: "productsDescription9",
     colour: "Black",
     composition: "70% Cotton 30% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -291,11 +280,10 @@ const products = [
       navixpumagaminghoodie2,
       navixpumagaminghoodie3,
     ],
-    description:
-      "Hoodie from NAVI pro kit 2022. New minimalistic design with a small NAVI and Puma logos and stylish details. We also designed openings under the sleeves for good thermoregulation during even the most intense game.",
+    description: "productsDescription10",
     colour: "Black",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   // APPAREL Jackets
@@ -309,11 +297,10 @@ const products = [
       navi2025prokitjacket2,
       navi2025prokitjacket3,
     ],
-    description:
-      "Retro vibes meet modern versatility in the NAVI Pro Kit Jacket. Featuring a sleek, throwback design, this jacket is more than just a style statement—it transforms into a short-sleeved version for ultimate adaptability. Whether you’re gearing up for a match or heading out, this jacket’s got you covered.",
+    description: "productsDescription11",
     colour: "Black",
     composition: "100% Polyamide",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -326,11 +313,10 @@ const products = [
       navixpuma2024prokitjacket2,
       navixpuma2024prokitjacket3,
     ],
-    description:
-      "Experience the style of the new NAVI x PUMA 2024 Pro Kit. The bright design of the jacket goes beyond traditional esports clothing and reflects NAVI's desire to constantly change for the better. Perfect for both gaming sessions and everyday wear, it's the perfect blend of sports technology and style.",
+    description: "productsDescription12",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -343,11 +329,10 @@ const products = [
       navixpuma2022prokitgamedayjacket2,
       navixpuma2022prokitgamedayjacket3,
     ],
-    description:
-      "NAVI 2022 pro kit zip-up jacket. With NAVI and Puma logos and bright yellow inserts on the sleeves. Let everyone know that you support NAVI.",
+    description: "productsDescription13",
     colour: "Black",
     composition: "52% Recycled Polyester, 48% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -360,11 +345,10 @@ const products = [
       navixpuma2023gamedayjacketpumablack2,
       navixpuma2023gamedayjacketpumablack3,
     ],
-    description:
-      "The Gameday Jacket from the NAVI x PUMA 2023 Pro Kit is here. Carefully crafted and adorned with texture inserts, it will become an essential part of your wardrobe.",
+    description: "productsDescription14",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -377,11 +361,10 @@ const products = [
       navixpuma2023fanwearjacketpumablack2,
       navixpuma2023fanwearjacketpumablack3,
     ],
-    description:
-      "The NAVI x PUMA 2023 Pro Kit introduces the Fan wear Jacket. It has a stylish texture and intricate texture inserts. Must-have that will undoubtedly elevate your wardrobe.",
+    description: "productsDescription15",
     colour: "Black",
     composition: "52% Recycled Polyester, 48% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -394,11 +377,10 @@ const products = [
       navixpuma2023halfziptoppumablack2,
       navixpuma2023halfziptoppumablack3,
     ],
-    description:
-      "Half-Zip Top from the NAVI x PUMA 2023 collection. Stay stylish and cozy while cheering for your favorite team.",
+    description: "productsDescription16",
     colour: "Black",
     composition: "52% Recycled Polyester, 48% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   // APPAREL Pants
@@ -408,11 +390,10 @@ const products = [
     categories: ["Pants", "APPAREL"],
     price: 100,
     images: [navi2025prokitpants, navi2025prokitpants2, navi2025prokitpants3],
-    description:
-      "Redefine versatility with the NAVI Pro Kit Pants. Crafted with segmented panels for a dynamic look, these pants transform effortlessly into shorts, offering comfort and flexibility for every situation. Designed to keep you moving, these are perfect for both casual wear and esports action.",
+    description: "productsDescription17",
     colour: "Black",
     composition: "100% Polyamide",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
   },
   {
@@ -425,11 +406,10 @@ const products = [
       navixpuma2024prokitpants2,
       navixpuma2024prokitpants3,
     ],
-    description:
-      "Complete your gaming getup with the NAVI x PUMA 2024 Pro Kit Pants. Designed with the modern gamer in mind, these pants offer both comfort and style, making them suitable for intense gaming or casual wear.",
+    description: "productsDescription18",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -442,11 +422,10 @@ const products = [
       navixpumaprokitgamedaypants2,
       navixpumaprokitgamedaypants3,
     ],
-    description:
-      "NAVI 2022 pro kit track pants. With NAVI and Puma logos and bright yellow panels along the length of the leg. Let everyone know that you support NAVI.",
+    description: "productsDescription19",
     colour: "Black",
     composition: "52% Recycled Polyester, 48% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -459,11 +438,10 @@ const products = [
       navixpuma2023gamedaypantspumablack2,
       navixpuma2023gamedaypantspumablack3,
     ],
-    description:
-      "Black Gameday Pants from the Pro Kit 2023 are made with the highest quality materials. All comfy, stretchy, and stylish, they are your go-to for long gaming and training sessions.",
+    description: "productsDescription20",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -476,11 +454,10 @@ const products = [
       navixpuma2023fanwearpantspumablack2,
       navixpuma2023fanwearpantspumablack3,
     ],
-    description:
-      "Black pants from the Pro Kit 2023. All comfy and stretchy, they are your go-to for long gaming and training sessions.",
+    description: "productsDescription21",
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   // APPAREL Shorts
@@ -494,11 +471,10 @@ const products = [
       navixpumashortsblack2,
       navixpumashortsblack3,
     ],
-    description:
-      "Stay cool and agile in the NAVI Sweat Shorts, designed for peak performance and supreme comfort. Whether you're dominating the virtual arena or hitting the streets, these shorts—in PUMA Black for a sleek look or Team Violet for a dash of playfulness—are your go-to for any activity.",
+    description: "productsDescription22",
     colour: "Black",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -511,11 +487,10 @@ const products = [
       navixpuma2024shortsteamviolet2,
       navixpuma2024shortsteamviolet3,
     ],
-    description:
-      "Stay cool and agile in the NAVI Sweat Shorts, designed for peak performance and supreme comfort. Whether you're dominating the virtual arena or hitting the streets, these shorts—in PUMA Black for a sleek look or Team Violet for a dash of playfulness—are your go-to for any activity.",
+    description: "productsDescription22",
     colour: "Violet",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   {
@@ -528,11 +503,10 @@ const products = [
       navixpuma2022playershorts2,
       navixpuma2022playershorts3,
     ],
-    description:
-      "NAVI 2022 pro kit shorts. Basic shorts in black for complete comfort and freedom of movement. NAVI and Puma logos and small design elements. In high-quality , already traditional for NAVI merch.",
+    description: "productsDescription23",
     colour: "Black",
     composition: "100% Cotton",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
     sizes: ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
   },
   // PRO-KIT Sleeves
@@ -546,8 +520,7 @@ const products = [
       navi2025prokitsleevesornament2,
       navi2025prokitsleevesornament3,
     ],
-    description:
-      "Effortless movement for precision gameplay. These sleeves offer smooth glide on any surface. Redesigned for the latest NAVI 2025 pro kit. Look like NAVI — play like NAVI. Comes with a pair of sleeves.",
+    description: "productsDescription24",
     colour: "Black",
     composition: "100% Polyester",
     sizes: ["S/M", "L/XL"],
@@ -562,8 +535,7 @@ const products = [
       navi2025prokitsleevesborntowin2,
       navi2025prokitsleevesborntowin3,
     ],
-    description:
-      "Elevate your game with the NAVI Pro Gaming Sleeves 2025, designed for peak performance and ultimate comfort. These limited-edition sleeves feature state-of-the-art moisture-wicking fabric that keeps you cool under pressure, enhancing your gaming stamina during intense sessions.",
+    description: "productsDescription25",
     colour: "Black",
     composition: "100% Polyester",
     sizes: ["S/M", "L/XL"],
@@ -574,8 +546,7 @@ const products = [
     categories: ["Sleeves", "PRO-KIT"],
     price: 20,
     images: [gamingsleeves1mplethings],
-    description:
-      "Elevate your game with the NAVI Pro Gaming Sleeves 2025, designed for peak performance and ultimate comfort. These limited-edition sleeves feature state-of-the-art moisture-wicking fabric that keeps you cool under pressure, enhancing your gaming stamina during intense sessions.",
+    description: "productsDescription25",
     colour: "White",
     composition: "100% Polyester",
     sizes: ["S/M", "L/XL"],
@@ -587,12 +558,11 @@ const products = [
     categories: ["Flag", "ACCESSORIES"],
     price: 25,
     images: [naviflagyellow, naviflagyellow2, naviflagyellow3],
-    description:
-      "The flag of a team that is obsessed with winning. The flag of the team you're obsessed with. Now available for order in a new design. It looks best on the fan sector and at the fan's house. Available in two colors: for those who like it brighter; and for those who like it dark.",
+    description: "productsDescription26",
     sizes: ["150x100cm"],
     colour: "Yellow",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
   },
   {
     id: 33,
@@ -600,12 +570,11 @@ const products = [
     categories: ["Flag", "ACCESSORIES"],
     price: 25,
     images: [naviflagblack, naviflagblack2, naviflagblack3],
-    description:
-      "The flag of a team that is obsessed with winning. The flag of the team you're obsessed with. Now available for order in a new design. It looks best on the fan sector and at the fan's house. Available in two colors: for those who like it brighter; and for those who like it dark.",
+    description: "productsDescription26",
     sizes: ["150x100cm"],
     colour: "Black",
     composition: "100% Polyester",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
   },
   // ACCESSORIES Scarfs
   {
@@ -614,8 +583,7 @@ const products = [
     categories: ["Scarf", "ACCESSORIES"],
     price: 18,
     images: [navifanscarf2025, navifanscarf20252, navifanscarf20253],
-    description:
-      "Rally your team with our Fan Spirit Scarves! Perfect for any season, these lightweight scarves showcase your loyalty with vibrant designs and bold colors. Ideal for games, fan meet-ups, and showing your pride everywhere you go. Wear your passion, wave your support, and stand out in the crowd. Get your scarf today and cheer in style!",
+    description: "productsDescription27",
     sizes: ["130x17cm"],
     colour: "Black",
     composition: "100% Acrylic",
@@ -627,11 +595,10 @@ const products = [
     categories: ["Backpack", "ACCESSORIES"],
     price: 45,
     images: [navibackpack, navibackpack2, navibackpack3],
-    description:
-      "Take everything with you and put it in a backpack with the NAVI logo. Comfortable and roomy, it will fit all the necessary items.",
+    description: "productsDescription28",
     colour: "Black",
     composition: "100% Nylon",
-    care: "Wash at 30°C with other similar composition items.",
+    care: "careText",
   },
   // ACCESSORIES Suitcases
   {
@@ -644,8 +611,7 @@ const products = [
       navixhavearestsuitcase2,
       navixhavearestsuitcase3,
     ],
-    description:
-      "We love partnering with cool Ukrainian brands. The NAVI x Have A Rest suitcase is a perfect item: vibrant, reliable, and tech-savvy, with a built-in USB port and Power Bank for device charging while you wait for your flight. Available now at the NAVI Shop.",
+    description: "productsDescription29",
     specifications: [
       "Volume: 35 liters",
       "Weight: 2.95 kg",

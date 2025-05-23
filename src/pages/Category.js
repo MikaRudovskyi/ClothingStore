@@ -30,17 +30,33 @@ const ProductCount = styled.div`
 `;
 
 const SortSelect = styled.select`
-  padding: 10px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #000;
+  font-weight: bold;
+  border-radius: 12px;
+  border: 2px solid #ffd700;
+  background-color: #111;
   color: #ffd700;
   cursor: pointer;
   outline: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
 
   &:hover {
-    border-color: #ffd700;
+    background-color: #222;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    border-color: #ffea00;
+  }
+
+  &:focus {
+    border-color: #fff200;
+    box-shadow: 0 0 20px rgba(255, 242, 0, 0.8);
+  }
+
+  option {
+    background-color: #000;
+    color: #ffd700;
   }
 `;
 
@@ -52,6 +68,28 @@ const Category = () => {
   const filteredProducts = products.filter(
     (product) => product.categories && product.categories.includes(category)
   );
+
+  const normalizeCategoryKey = (category) => {
+    const map = {
+      "t-shirts": "tShirts",
+      apparel: "apparel",
+      jersey: "jersey",
+      "pro-kit": "proKit",
+      hoodies: "hoodies",
+      jackets: "jackets",
+      pants: "pants",
+      shorts: "shorts",
+      accessories: "accessories",
+      flag: "flag",
+      scarf: "scarf",
+      backpack: "backpack",
+      suitcase: "suitcase",
+      outlet: "outlet",
+      sleeves: "sleeves",
+    };
+
+    return map[category.toLowerCase()] || category;
+  };
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortOption) {
@@ -72,8 +110,8 @@ const Category = () => {
     <Container>
       <TopBar>
         <ProductCount>
-          {category} {filteredProducts.length} product
-          {filteredProducts.length !== 1 ? "s" : ""}
+          {t(normalizeCategoryKey(category))}{" "}
+          {t("productCount", { count: filteredProducts.length })}
         </ProductCount>
 
         <SortSelect
