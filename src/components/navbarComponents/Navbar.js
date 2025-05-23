@@ -175,7 +175,8 @@ const Navbar = () => {
           <li>
             <Dropdown className="mobile-dropdown">
               <button onClick={toggleLanguageDropdown}>
-                <Globe /> {t(currentLanguage?.labelKey)} <ChevronDown />
+                <Globe /> {t(currentLanguage?.labelKey) || "English"}{" "}
+                <ChevronDown />
               </button>
               <ul style={{ display: languageDropdownOpen ? "block" : "none" }}>
                 {languages.map(({ code, labelKey }) => (
