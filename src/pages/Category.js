@@ -7,6 +7,10 @@ import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const ProductList = styled.div`
@@ -14,6 +18,12 @@ const ProductList = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    gap: 10px;
+  }
 `;
 
 const TopBar = styled.div`
@@ -22,11 +32,24 @@ const TopBar = styled.div`
   align-items: center;
   margin: 10px 10px 20px 10px;
   flex-wrap: wrap;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
 `;
 
 const ProductCount = styled.div`
   font-size: 1rem;
   color: #ffd700;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    text-align: left;
+  }
 `;
 
 const SortSelect = styled.select`
@@ -42,6 +65,7 @@ const SortSelect = styled.select`
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
   transition: all 0.3s ease;
   letter-spacing: 1px;
+  min-width: 180px;
 
   &:hover {
     background-color: #222;
@@ -57,6 +81,11 @@ const SortSelect = styled.select`
   option {
     background-color: #000;
     color: #ffd700;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    padding: 10px 14px;
   }
 `;
 

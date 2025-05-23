@@ -24,7 +24,7 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
   const { t, i18n } = useTranslation();
-  const { language, setLanguage, currency, setCurrency } = useCurrency();
+  const { setLanguage, currency, setCurrency } = useCurrency();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
@@ -84,11 +84,17 @@ const Navbar = () => {
     setLanguageDropdownOpen((prev) => !prev);
   };
 
+  const [openCategory, setOpenCategory] = useState(null);
+
   return (
     <Nav>
       <TopBar>
         <div className="logo-container">
-          <Link to="/" className="logo">
+          <Link
+            to="/"
+            className="logo"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <img src={LogoNavi} alt="Logo Navi" className="logo-image" />
             <span className="logo-text">Clothing Store</span>
           </Link>
@@ -192,68 +198,97 @@ const Navbar = () => {
         </ul>
         <BottomBar>
           <ul>
+            {[
+              {
+                name: "PRO-KIT",
+                label: t("proKit"),
+                sub: [
+                  { slug: "Jersey", label: t("jersey") },
+                  { slug: "Sleeves", label: t("sleeves") },
+                ],
+              },
+              {
+                name: "APPAREL",
+                label: t("apparel"),
+                sub: [
+                  ["T-shirts", "tShirts"],
+                  ["Hoodies", "hoodies"],
+                  ["Jackets", "jackets"],
+                  ["Pants", "pants"],
+                  ["Shorts", "shorts"],
+                ].map(([slug, label]) => ({ slug, label: t(label) })),
+              },
+              {
+                name: "ACCESSORIES",
+                label: t("accessories"),
+                sub: [
+                  ["Flag", "flag"],
+                  ["Scarf", "scarf"],
+                  ["Backpack", "backpack"],
+                  ["Suitcase", "suitcase"],
+                ].map(([slug, label]) => ({ slug, label: t(label) })),
+              },
+            ].map(({ name, label, sub }) => (
+              <li key={name}>
+                <CategoryDropdown>
+                  <div className="dropdown-toggle">
+                    <Link
+                      to={`/category/${name}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {label}
+                    </Link>
+                    <button
+                      type="button"
+                      className={`dropdown-arrow ${
+                        openCategory === name ? "open" : ""
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpenCategory(openCategory === name ? null : name);
+                      }}
+                      aria-label={`Toggle subcategories for ${name}`}
+                    >
+                      <ChevronDown />
+                    </button>
+                  </div>
+
+                  {openCategory === name && (
+                    <ul>
+                      {sub.map(({ slug, label }) => (
+                        <li key={slug}>
+                          <Link
+                            to={`/category/${slug}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </CategoryDropdown>
+              </li>
+            ))}
+
             <li>
-              <CategoryDropdown>
-                <Link to="/category/PRO-KIT">{t("proKit")}</Link>
-                <ul>
-                  <li>
-                    <Link to="/category/Jersey">{t("jersey")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Sleeves">{t("sleeves")}</Link>
-                  </li>
-                </ul>
-              </CategoryDropdown>
+              <Link
+                to="/category/OUTLET"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t("outlet")}
+              </Link>
             </li>
             <li>
-              <CategoryDropdown>
-                <Link to="/category/APPAREL">{t("apparel")}</Link>
-                <ul>
-                  <li>
-                    <Link to="/category/T-shirts">{t("tShirts")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Hoodies">{t("hoodies")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Jackets">{t("jackets")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Pants">{t("pants")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Shorts">{t("shorts")}</Link>
-                  </li>
-                </ul>
-              </CategoryDropdown>
+              <Link to="/delivery" onClick={() => setIsMobileMenuOpen(false)}>
+                {t("delivery")}
+              </Link>
             </li>
             <li>
-              <CategoryDropdown>
-                <Link to="/category/ACCESSORIES">{t("accessories")}</Link>
-                <ul>
-                  <li>
-                    <Link to="/category/Flag">{t("flag")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Scarf">{t("scarf")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Backpack">{t("backpack")}</Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Suitcase">{t("suitcase")}</Link>
-                  </li>
-                </ul>
-              </CategoryDropdown>
-            </li>
-            <li>
-              <Link to="/category/OUTLET">{t("outlet")}</Link>
-            </li>
-            <li>
-              <Link to="/delivery">{t("delivery")}</Link>
-            </li>
-            <li>
-              <Link to="/contact">{t("contact")}</Link>
+              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                {t("contact")}
+              </Link>
             </li>
           </ul>
         </BottomBar>
