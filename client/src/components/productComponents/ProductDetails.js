@@ -302,6 +302,10 @@ const ProductDetails = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e) => {
       if (!isModalOpen) return;
 

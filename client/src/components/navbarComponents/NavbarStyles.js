@@ -287,6 +287,7 @@ export const TopBar = styled.div`
 
   .mobile-menu-button {
     display: none;
+    transform: translateY(4px);
     background: none;
     border: none;
     color: #ffffff;
