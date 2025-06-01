@@ -1,7 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { useCart } from "./CartContext";
 import { useCurrency } from "../CurrencyContext";
 import { useTranslation } from "react-i18next";
+import CheckoutModal from "../cartComponents/CheckoutModal";
 
 const CartStyled = styled.div`
   padding: 30px;
@@ -64,6 +66,12 @@ const CartStyled = styled.div`
     flex-wrap: wrap;
   }
 
+  .order-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
   button {
     padding: 8px 15px;
     font-size: 1rem;
@@ -122,10 +130,65 @@ const CartStyled = styled.div`
   }
 `;
 
+const PremiumOrderButton = styled.button`
+  background: linear-gradient(135deg, #ffe100, #ffb800);
+  color: #000;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3), inset 0 0 0 2px #00000020;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: linear-gradient(135deg, #fff700, #ffe100);
+    box-shadow: 0 0 15px #ffe100aa;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #ffe10080;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #fff80055, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem;
+    width: 100%;
+  }
+`;
+
 const Cart = () => {
   const { cartItems, removeFromCart, decreaseQuantity, increaseQuantity } =
     useCart();
   const { currency, currencyRates, currencySymbols } = useCurrency();
+  const [isModalOpen, setModalOpen] = useState(false);
   const { t } = useTranslation();
 
   const calculateTotal = () => {
@@ -202,6 +265,19 @@ const Cart = () => {
           <p>
             {t("total")}: {symbol} {formattedTotal}
           </p>
+          <div className="order-button-wrapper">
+            {cartItems.length > 0 && (
+              <>
+                <PremiumOrderButton onClick={() => setModalOpen(true)}>
+                  {t("makeOrder")}
+                </PremiumOrderButton>
+                <CheckoutModal
+                  isOpen={isModalOpen}
+                  onClose={() => setModalOpen(false)}
+                />
+              </>
+            )}
+          </div>
         </>
       )}
     </CartStyled>
