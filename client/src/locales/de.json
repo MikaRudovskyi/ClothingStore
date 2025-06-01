@@ -226,5 +226,6 @@
   "shippingMethod": "Versandart: Standardversand",
   "agreeTermsAndConditions": "Ich stimme den Geschäftsbedingungen der Website zu",
   "cancel": "Abbrechen",
-  "successfullOrder": "Ihre Bestellung wurde erfolgreich aufgegeben!"
+  "successfullOrder": "Ihre Bestellung wurde erfolgreich aufgegeben!",
+  "searchByName": "Wonach suchen Sie?"
 }

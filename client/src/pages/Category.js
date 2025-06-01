@@ -4,6 +4,7 @@ import products from "../data/products";
 import ProductCard from "../components/productComponents/ProductCard";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { FiSearch, FiX } from "react-icons/fi";
 
 const Container = styled.div`
   padding: 20px;
@@ -18,7 +19,6 @@ const ProductList = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px;
-  gap: 20px;
 
   @media (max-width: 768px) {
     padding: 10px;
@@ -41,14 +41,36 @@ const TopBar = styled.div`
   }
 `;
 
-const ProductCount = styled.div`
-  font-size: 1rem;
+const ProductCountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: #ffd700;
+  font-size: 1.7rem;
   white-space: nowrap;
+
+  svg {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  svg:hover {
+    transform: scale(1.2);
+    color: #fff200;
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    background-color: rgba(255, 255, 0, 0.1);
+    border-color: #fff200;
+  }
 
   @media (max-width: 768px) {
     font-size: 0.95rem;
-    text-align: left;
   }
 `;
 
@@ -89,14 +111,84 @@ const SortSelect = styled.select`
   }
 `;
 
+const SearchArea = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    width: 100%;
+  }
+`;
+
+const ClearButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  background: none !important;
+  border: none;
+  cursor: pointer;
+  color: #ffd700;
+  font-size: 1.2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+
+  &:hover {
+    transform: translateY(-50%) rotate(180deg);
+    color: #ffd700;
+    background: none !important;
+  }
+
+  svg {
+    background: none !important;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 18px;
+    right: 10px;
+    font-size: 1.1rem;
+  }
+`;
+
+const SlideInput = styled.input`
+  width: ${(props) => (props.active ? "520px" : "0")};
+  opacity: ${(props) => (props.active ? "1" : "0")};
+  padding: ${(props) => (props.active ? "12px 16px" : "0")};
+  margin-left: ${(props) => (props.active ? "0" : "-20px")};
+  transition: all 0.4s ease;
+  border-radius: 12px;
+  border: 2px solid #ffd700;
+  background-color: #111;
+  color: #ffd700;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: ${(props) =>
+    props.active ? "0 0 10px rgba(255, 215, 0, 0.3)" : "none"};
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  @media (max-width: 768px) {
+    width: ${(props) => (props.active ? "100%" : "0")};
+    font-size: 0.9rem;
+  }
+`;
+
 const Category = () => {
   const { category } = useParams();
   const [sortOption, setSortOption] = useState("default");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
   const { t } = useTranslation();
-
-  const filteredProducts = products.filter(
-    (product) => product.categories && product.categories.includes(category)
-  );
 
   const normalizeCategoryKey = (category) => {
     const map = {
@@ -120,7 +212,15 @@ const Category = () => {
     return map[category.toLowerCase()] || category;
   };
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+  const filteredProducts = products.filter(
+    (product) => product.categories && product.categories.includes(category)
+  );
+
+  const filteredBySearch = filteredProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedProducts = [...filteredBySearch].sort((a, b) => {
     switch (sortOption) {
       case "priceAsc":
         return a.price - b.price;
@@ -138,10 +238,25 @@ const Category = () => {
   return (
     <Container>
       <TopBar>
-        <ProductCount>
-          {t(normalizeCategoryKey(category))}{" "}
-          {t("productCount", { count: filteredProducts.length })}
-        </ProductCount>
+        <SearchArea>
+          <ProductCountWrapper>
+            {t(normalizeCategoryKey(category))}{" "}
+            {t("productCount", { count: sortedProducts.length })}
+            <FiSearch onClick={() => setShowSearch((prev) => !prev)} />
+          </ProductCountWrapper>
+          <SlideInput
+            type="text"
+            placeholder={t("searchByName")}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            active={showSearch}
+          />
+          {showSearch && searchQuery && (
+            <ClearButton onClick={() => setSearchQuery("")}>
+              <FiX />
+            </ClearButton>
+          )}
+        </SearchArea>
 
         <SortSelect
           value={sortOption}

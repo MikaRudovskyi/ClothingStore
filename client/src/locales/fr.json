@@ -226,5 +226,6 @@
   "shippingMethod": "Méthode de livraison : Livraison standard",
   "agreeTermsAndConditions": "J'accepte les conditions générales du site",
   "cancel": "Annuler",
-  "successfullOrder": "Votre commande a été passée avec succès!"
+  "successfullOrder": "Votre commande a été passée avec succès!",
+  "searchByName": "Que recherchez-vous?"
 }

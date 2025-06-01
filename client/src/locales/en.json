@@ -226,5 +226,6 @@
   "shippingMethod": "Shipping method: Standard delivery",
   "agreeTermsAndConditions": "I agree to the site terms and conditions",
   "cancel": "Cancel",
-  "successfullOrder": "Your order has been placed successfully!"
+  "successfullOrder": "Your order has been placed successfully!",
+  "searchByName": "What are you looking for?"
 }

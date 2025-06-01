@@ -228,5 +228,6 @@
   "shippingMethod": "Спосіб доставки: Стандартна доставка",
   "agreeTermsAndConditions": "Я погоджуюся з умовами сайту",
   "cancel": "Скасувати",
-  "successfullOrder": "Ваше замовлення успішно розміщено!"
+  "successfullOrder": "Ваше замовлення успішно розміщено!",
+  "searchByName": "Що ви шукаєте?"
 }
