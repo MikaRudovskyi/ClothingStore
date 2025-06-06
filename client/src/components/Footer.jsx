@@ -44,13 +44,25 @@ const Footer = () => {
         <a href="/terms">{t("termsOfUse")}</a>
       </p>
       <div className="social-links">
-        <a href="https://www.facebook.com/NatusVincere">
+        <a
+          href="https://www.facebook.com/NatusVincere"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i className="fab fa-facebook-f"></i>
         </a>
-        <a href="https://www.instagram.com/natus_vincere_official/">
+        <a
+          href="https://www.instagram.com/natus_vincere_official/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i className="fab fa-instagram"></i>
         </a>
-        <a href="https://www.youtube.com/@NAVICounterStrike">
+        <a
+          href="https://www.youtube.com/@NAVICounterStrike"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i className="fab fa-youtube"></i>
         </a>
       </div>
