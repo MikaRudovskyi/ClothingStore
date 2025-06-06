@@ -37,7 +37,9 @@ const Navbar = () => {
     { code: "fr", labelKey: "french" },
   ];
 
-  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
+  const currentLanguage =
+    languages.find((lang) => i18n.language.startsWith(lang.code)) ??
+    languages[0];
 
   useEffect(() => {
     const body = document.body;
