@@ -8,8 +8,14 @@ import LoginIcon from "../../assets/images/icons/login-icon.png";
 import LogoNavi from "../../assets/images/logo/navi_logo.png";
 import LoginModal from "../loginComponents/LoginModal";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { ChevronDown, Globe, DollarSign } from "lucide-react";
+import { ChevronDown, Globe, DollarSign, Euro } from "lucide-react";
+import CurrencyHryvnia from "./CurrencyHryvnia";
 import { useTranslation } from "react-i18next";
+import { ReactComponent as FlagGB } from "../../assets/images/flags/gb.svg";
+import { ReactComponent as FlagUA } from "../../assets/images/flags/ua.svg";
+import { ReactComponent as FlagDE } from "../../assets/images/flags/de.svg";
+import { ReactComponent as FlagES } from "../../assets/images/flags/es.svg";
+import { ReactComponent as FlagFR } from "../../assets/images/flags/fr.svg";
 import {
   Nav,
   TopBar,
@@ -30,12 +36,28 @@ const Navbar = () => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
 
   const languages = [
-    { code: "en", labelKey: "english" },
-    { code: "uk", labelKey: "ukrainian" },
-    { code: "de", labelKey: "german" },
-    { code: "es", labelKey: "spanish" },
-    { code: "fr", labelKey: "french" },
+    { code: "en", labelKey: "english", FlagIcon: FlagGB },
+    { code: "uk", labelKey: "ukrainian", FlagIcon: FlagUA },
+    { code: "de", labelKey: "german", FlagIcon: FlagDE },
+    { code: "es", labelKey: "spanish", FlagIcon: FlagES },
+    { code: "fr", labelKey: "french", FlagIcon: FlagFR },
   ];
+
+  const currencyIcons = {
+    USD: (
+      <DollarSign
+        size={18}
+        style={{ marginRight: 8, verticalAlign: "middle" }}
+      />
+    ),
+    EUR: <Euro size={18} style={{ marginRight: 8, verticalAlign: "middle" }} />,
+    UAH: (
+      <CurrencyHryvnia
+        size={18}
+        style={{ marginRight: 8, verticalAlign: "middle" }}
+      />
+    ),
+  };
 
   const currentLanguage =
     languages.find((lang) => i18n.language.startsWith(lang.code)) ??
@@ -104,10 +126,12 @@ const Navbar = () => {
         <div className="top-bar-right">
           <Dropdown className="desktop-dropdown">
             <button onClick={toggleCurrencyDropdown}>
-              <DollarSign
-                size={18}
-                style={{ marginRight: "8px", verticalAlign: "middle" }}
-              />
+              {currencyIcons[currency] || (
+                <DollarSign
+                  size={18}
+                  style={{ marginRight: 8, verticalAlign: "middle" }}
+                />
+              )}
               {currency}
             </button>
             {currencyDropdownOpen && (
@@ -115,7 +139,7 @@ const Navbar = () => {
                 {["USD", "EUR", "UAH"].map((cur) => (
                   <li key={cur}>
                     <button onClick={() => handleCurrencyChange(cur)}>
-                      {cur}
+                      {currencyIcons[cur]} {cur}
                     </button>
                   </li>
                 ))}
@@ -124,17 +148,37 @@ const Navbar = () => {
           </Dropdown>
           <Dropdown className="desktop-dropdown">
             <button onClick={toggleLanguageDropdown}>
-              <Globe
-                size={18}
-                style={{ marginRight: "8px", verticalAlign: "middle" }}
-              />
+              {currentLanguage.FlagIcon && (
+                <currentLanguage.FlagIcon
+                  style={{
+                    width: 20,
+                    height: 14,
+                    marginRight: 6,
+                    verticalAlign: "middle",
+                  }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              )}
               {t(currentLanguage?.labelKey)}
             </button>
             {languageDropdownOpen && (
               <ul>
-                {languages.map(({ code, labelKey }) => (
+                {languages.map(({ code, labelKey, FlagIcon }) => (
                   <li key={code}>
                     <button onClick={() => handleLanguageChange(code)}>
+                      {FlagIcon && (
+                        <FlagIcon
+                          style={{
+                            width: 20,
+                            height: 14,
+                            marginRight: 6,
+                            verticalAlign: "middle",
+                          }}
+                          aria-hidden="true"
+                          focusable="false"
+                        />
+                      )}
                       {t(labelKey)}
                     </button>
                   </li>
@@ -167,13 +211,19 @@ const Navbar = () => {
           <li>
             <Dropdown className="mobile-dropdown">
               <button onClick={toggleCurrencyDropdown}>
-                <DollarSign /> {currency} <ChevronDown />
+                {currencyIcons[currency] || (
+                  <DollarSign
+                    size={18}
+                    style={{ marginRight: 8, verticalAlign: "middle" }}
+                  />
+                )}
+                {currency} <ChevronDown />
               </button>
               <ul style={{ display: currencyDropdownOpen ? "block" : "none" }}>
                 {["USD", "EUR", "UAH"].map((cur) => (
                   <li key={cur}>
                     <button onClick={() => handleCurrencyChange(cur)}>
-                      {cur}
+                      {currencyIcons[cur]} {cur}
                     </button>
                   </li>
                 ))}
@@ -187,9 +237,14 @@ const Navbar = () => {
                 <ChevronDown />
               </button>
               <ul style={{ display: languageDropdownOpen ? "block" : "none" }}>
-                {languages.map(({ code, labelKey }) => (
+                {languages.map(({ code, labelKey, FlagIcon }) => (
                   <li key={code}>
                     <button onClick={() => handleLanguageChange(code)}>
+                      {FlagIcon && (
+                        <FlagIcon
+                          style={{ marginRight: 8, verticalAlign: "middle" }}
+                        />
+                      )}
                       {t(labelKey)}
                     </button>
                   </li>
@@ -255,7 +310,6 @@ const Navbar = () => {
                       <ChevronDown />
                     </button>
                   </div>
-
                   {openCategory === name && (
                     <ul>
                       {sub.map(({ slug, label }) => (
@@ -273,7 +327,6 @@ const Navbar = () => {
                 </CategoryDropdown>
               </li>
             ))}
-
             <li>
               <Link
                 to="/category/OUTLET"

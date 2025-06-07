@@ -36,7 +36,7 @@ export const Dropdown = styled.div`
     display: none;
     position: absolute;
     background-color: #1e1e1e;
-    min-width: 150px;
+    min-width: 160px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1;
     list-style: none;
